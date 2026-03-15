@@ -20,7 +20,7 @@ struct HomeView: View {
             Color.backgroundPrimary
                 .ignoresSafeArea()
 
-            currentView
+            contentView
                 .frame(
                     maxWidth: .infinity,
                     maxHeight: .infinity
@@ -30,14 +30,34 @@ struct HomeView: View {
         }
     }
 
-    @ViewBuilder
-    private var currentView: some View { 
-        switch selectedTab {
-        case .recipes: RecipesView()
-        case .plan: PlanView()
-        case .grocery: GroceryView()
-        case .more: MoreView()
+    private var contentView: some View {
+        ZStack {
+            tabContent(.recipes) {
+                RecipesView()
+            }
+
+            tabContent(.plan) {
+                PlanView()
+            }
+
+            tabContent(.grocery) {
+                GroceryView()
+            }
+
+            tabContent(.more) {
+                MoreView()
+            }
         }
+    }
+
+    private func tabContent<Content: View>(
+        _ tab: Tab,
+        @ViewBuilder content: () -> Content
+    ) -> some View {
+        content()
+            .opacity(selectedTab == tab ? 1 : 0)
+            .allowsHitTesting(selectedTab == tab)
+            .accessibilityHidden(selectedTab != tab)
     }
 
     private var bottomBar: some View {

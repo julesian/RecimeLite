@@ -9,9 +9,6 @@ import SwiftUI
 
 struct MoreView: View {
     var body: some View {
-        NavigationView {
-            ComingSoonView(title: "More")
-        }
-        .styleWithBrand()
+        ComingSoonView(title: "More")
     }
 }

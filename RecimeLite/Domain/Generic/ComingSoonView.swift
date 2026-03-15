@@ -11,19 +11,24 @@ struct ComingSoonView: View {
     let title: String
     
     var body: some View {
-        ZStack {
-            Color.backgroundPrimary
-                .ignoresSafeArea()
+        VStack(spacing: 0) {
+            BrandNavigationBarView()
 
-            VStack(spacing: 4) {
-                Text(title)
-                    .primaryTextStyle()
+            ZStack {
+                Color.backgroundPrimary
+                    .ignoresSafeArea()
 
-                Text("Coming Soon")
-                    .secondaryTextStyle()
+                VStack(spacing: 4) {
+                    Text(title)
+                        .primaryTextStyle()
+
+                    Text("Coming Soon")
+                        .secondaryTextStyle()
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.horizontal, 24)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.horizontal, 24)
         }
+        .background(Color.backgroundPrimary)
     }
 }

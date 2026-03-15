@@ -15,7 +15,9 @@ struct RecipesView: View {
     }
 
     var body: some View {
-        NavigationView {
+        VStack(spacing: 0) {
+            BrandNavigationBarView()
+
             Group {
                 if viewModel.isLoading,
                    viewModel.recipes.isEmpty
@@ -30,15 +32,16 @@ struct RecipesView: View {
                     listView
                 }
             }
-            .styleWithBrand()
             .task {
                 await viewModel.loadRecipes()
             }
         }
+        .background(Color.backgroundPrimary)
     }
     
     private var progressView: some View {
         ProgressView("Loading recipes...")
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     private func contentUnavailableView(errorMessage: String) -> some View {
@@ -47,6 +50,7 @@ struct RecipesView: View {
             systemImage: "exclamationmark.triangle",
             description: Text(errorMessage)
         )
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     private var listView: some View {

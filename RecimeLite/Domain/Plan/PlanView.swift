@@ -9,9 +9,6 @@ import SwiftUI
 
 struct PlanView: View {
     var body: some View {
-        NavigationView {
-            ComingSoonView(title: "Plan")
-        }
-        .styleWithBrand()
+        ComingSoonView(title: "Plan")
     }
 }

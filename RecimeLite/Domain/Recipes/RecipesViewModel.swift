@@ -1,10 +1,3 @@
-//
-//  RecipesViewModel.swift
-//  RecimeLite
-//
-//  Created by Codex on 3/15/26.
-//
-
 import Foundation
 import Combine
 
