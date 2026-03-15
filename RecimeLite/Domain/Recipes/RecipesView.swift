@@ -66,36 +66,27 @@ struct RecipesView: View {
             HStack {
                 Text(recipe.title)
                     .font(.headline)
-                    .foregroundStyle(.textPrimary)
-                
-                // TODO: add style for primary text
+                    .primaryTextStyle()
 
                 Spacer()
 
                 if recipe.isVegetarian {
                     Text("Vegetarian")
                         .font(.caption)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                        .background(.accentGreen.opacity(0.50))
-                        .foregroundStyle(.textPrimary)
-                        .clipShape(Capsule())
-                    
-                    // TODO: add style for capsule text
+                        .capsuleTextStyle(
+                            foregroundColor: .textPrimary,
+                            backgroundColor: .accentGreen.opacity(0.50)
+                        )
                 }
             }
 
             Text(recipe.description)
                 .font(.subheadline)
-                .foregroundStyle(.secondary)
-            
-            // TODO: add style for secondary text
+                .secondaryTextStyle()
 
             Text("Servings: \(recipe.servings)")
                 .font(.caption)
-                .foregroundStyle(.secondary)
-            
-            // TODO: add style for teritary text
+                .secondaryTextStyle()
         }
         .padding(.vertical, 4)
     }
