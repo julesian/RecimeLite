@@ -11,24 +11,33 @@ import SwiftUI
 struct SplashView: View {
     
     enum Constants {
-        static let logoSize = 140.0
+        static let logoWidth = 105.0
+        static let logoHeight = 85.0
+        static let safeAreaOffsetMultiplier = 0.28
+        static let maxUpwardOffset = 14.0
     }
     
     var body: some View {
-        ZStack {
-            Color.backgroundSplash
-                .ignoresSafeArea()
-            
-            Image(.appLogo)
-                .renderingMode(.template)
-                .resizable()
-                .scaledToFit()
-                .frame(
-                    width: Constants.logoSize,
-                    height: Constants.logoSize
-                )
-                .foregroundStyle(Color.accentYellow)
+        GeometryReader { geometry in
+            ZStack {
+                Color.backgroundSplash
+                    .ignoresSafeArea()
+                
+                Image(.appLogoSplash)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(
+                        width: Constants.logoWidth,
+                        height: Constants.logoHeight
+                    )
+                    .offset(y: logoOffsetY(for: geometry))
+            }
         }
+    }
+    
+    private func logoOffsetY(for geometry: GeometryProxy) -> CGFloat {
+        let adaptiveOffset = geometry.safeAreaInsets.top * Constants.safeAreaOffsetMultiplier
+        return -min(adaptiveOffset, Constants.maxUpwardOffset)
     }
 }
 
