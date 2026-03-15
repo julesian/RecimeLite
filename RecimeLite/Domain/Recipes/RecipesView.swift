@@ -174,3 +174,7 @@ private extension RecipesView {
         )
     }
 }
+
+#Preview {
+    RecipesView()
+}
