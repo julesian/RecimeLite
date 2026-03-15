@@ -3,7 +3,7 @@ import Combine
 
 @MainActor
 final class RecipesViewModel: ObservableObject {
-    @Published private(set) var recipes: [RecipeResponse] = []
+    @Published private(set) var recipes: [Recipe] = []
     @Published private(set) var isLoading = false
     @Published private(set) var errorMessage: String?
 
@@ -20,7 +20,7 @@ final class RecipesViewModel: ObservableObject {
         errorMessage = nil
 
         do {
-            recipes = try await fetchRecipesUseCase.execute()
+            recipes = try await fetchRecipesUseCase.execute().map(Recipe.init)
         } catch {
             errorMessage = error.localizedDescription
         }

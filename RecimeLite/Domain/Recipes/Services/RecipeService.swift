@@ -21,7 +21,7 @@ final class RecipeService: RecipeServiceProtocol {
         try await networkClient.mockRequest(
             RecipeRequest.fetchRecipes,
             as: [RecipeResponse].self,
-            behavior: .willDeliver(speed: .fast)
+            behavior: .willDeliver(speed: .slow)
         )
         #else
         try await networkClient.request(

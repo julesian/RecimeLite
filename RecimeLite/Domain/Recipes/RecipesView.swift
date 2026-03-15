@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RecipesView: View {
     @StateObject private var viewModel: RecipesViewModel
-
+    
     init(viewModel: RecipesViewModel = RecipesView.makeViewModel()) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -40,8 +40,7 @@ struct RecipesView: View {
     }
     
     private var progressView: some View {
-        ProgressView("Loading recipes...")
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        skeletonListView
     }
     
     private func contentUnavailableView(errorMessage: String) -> some View {
@@ -54,7 +53,20 @@ struct RecipesView: View {
     }
     
     private var listView: some View {
-        List(viewModel.recipes) { recipe in
+        recipeListView(viewModel.recipes)
+            .refreshable {
+                await viewModel.loadRecipes()
+            }
+    }
+
+    private var skeletonListView: some View {
+        recipeListView(Recipe.skeletonSamples)
+            .redacted(reason: .placeholder)
+            .allowsHitTesting(false)
+    }
+
+    private func recipeListView(_ recipes: [Recipe]) -> some View {
+        List(recipes) { recipe in
             recipeItemView(recipe)
                 .listRowBackground(Color.backgroundPrimary)
                 .listRowSeparator(.hidden)
@@ -63,13 +75,9 @@ struct RecipesView: View {
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .background(Color.backgroundPrimary)
-        .refreshable {
-            await viewModel.loadRecipes()
-        }
     }
     
-    // Ideally we would do RecipeResponse -> ResponseModel for UI
-    func recipeItemView(_ recipe: RecipeResponse) -> some View {
+    func recipeItemView(_ recipe: Recipe) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Text(recipe.title)
@@ -89,7 +97,7 @@ struct RecipesView: View {
             Text(recipe.description)
                 .secondaryTextStyle()
 
-            Text("Servings: \(recipe.servings)")
+            Text(recipe.servingsText)
                 .teritaryTextStyle()
         }
         .padding(16)
