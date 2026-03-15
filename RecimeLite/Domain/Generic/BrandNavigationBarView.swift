@@ -9,19 +9,10 @@ import SwiftUI
 
 struct BrandNavigationBarView: View {
     enum Constants {
-        static let logoHeight = 22.0
+        static let logoHeight = 26.0
         static let sideWidth = 44.0
-    }
-
-    let trailingSystemImage: String?
-    let trailingAction: (() -> Void)?
-
-    init(
-        trailingSystemImage: String? = nil,
-        trailingAction: (() -> Void)? = nil
-    ) {
-        self.trailingSystemImage = trailingSystemImage
-        self.trailingAction = trailingAction
+        static let horizontalPadding = 12.0
+        static let verticalPadding = 16.0
     }
 
     var body: some View {
@@ -32,18 +23,15 @@ struct BrandNavigationBarView: View {
 
                 Spacer()
 
-                Image(.appLogoText)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: Constants.logoHeight)
-                    .foregroundStyle(.accentBlue)
+                RecimeImageView(height: Constants.logoHeight)
 
                 Spacer()
 
-                trailingButton
+                Color.clear
+                    .frame(width: Constants.sideWidth, height: Constants.sideWidth)
             }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 16)
+            .padding(.horizontal, Constants.horizontalPadding)
+            .padding(.vertical, Constants.verticalPadding)
             
             Rectangle()
                 .frame(height: 1)
@@ -51,21 +39,5 @@ struct BrandNavigationBarView: View {
         }
         .frame(maxWidth: .infinity)
         .background(Color.foregroundPrimary)
-    }
-
-    @ViewBuilder
-    private var trailingButton: some View {
-        if let trailingSystemImage, let trailingAction {
-            Button(action: trailingAction) {
-                Image(systemName: trailingSystemImage)
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundStyle(.textPrimary)
-                    .frame(width: Constants.sideWidth, height: Constants.sideWidth)
-            }
-            .buttonStyle(.plain)
-        } else {
-            Color.clear
-                .frame(width: Constants.sideWidth, height: Constants.sideWidth)
-        }
     }
 }

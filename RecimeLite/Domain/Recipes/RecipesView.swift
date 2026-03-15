@@ -25,30 +25,16 @@ struct RecipesView: View {
         VStack(spacing: 0) {
             navigationBar
 
-            if isSearchVisible {
-                searchBarView
-            }
-
             contentView
         }
         .background(Color.backgroundPrimary)
     }
     
     private var navigationBar: some View {
-        BrandNavigationBarView(
-            trailingSystemImage: "magnifyingglass",
-            trailingAction: {
-                isSearchVisible.toggle()
-
-                if !isSearchVisible {
-                    searchText = ""
-                    activeSearchText = ""
-
-                    Task {
-                        await viewModel.loadRecipes()
-                    }
-                }
-            }
+        RecipesNavigationBarView(
+            searchText: $searchText,
+            isSearchExpanded: $isSearchVisible,
+            onCollapseSearch: closeSearch
         )
     }
     
@@ -78,6 +64,11 @@ struct RecipesView: View {
 
             activeSearchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
             await viewModel.searchRecipes(query: searchText)
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            guard isSearchVisible else { return }
+            closeSearch()
         }
     }
     
@@ -129,32 +120,6 @@ struct RecipesView: View {
         .scrollContentBackground(.hidden)
         .background(Color.backgroundPrimary)
     }
-
-    private var searchBarView: some View {
-        HStack(spacing: 10) {
-            Image(systemName: "magnifyingglass")
-                .foregroundStyle(.textSecondary)
-
-            TextField("Search recipes", text: $searchText)
-                .textInputAutocapitalization(.never)
-                .autocorrectionDisabled()
-                .primaryTextStyle()
-
-            if !searchText.isEmpty {
-                Button {
-                    searchText = ""
-                    activeSearchText = ""
-                } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(.textSecondary)
-                }
-                .buttonStyle(.plain)
-            }
-        }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
-        .background(Color.foregroundPrimary)
-    }
     
     func recipeItemView(_ recipe: Recipe) -> some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -181,6 +146,16 @@ struct RecipesView: View {
         }
         .padding(16)
         .background(Color.foregroundPrimary)
+    }
+
+    private func closeSearch() {
+        isSearchVisible = false
+        searchText = ""
+        activeSearchText = ""
+
+        Task {
+            await viewModel.loadRecipes()
+        }
     }
 }
 
