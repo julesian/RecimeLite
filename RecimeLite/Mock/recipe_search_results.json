@@ -1,27 +1,40 @@
 [
   {
-    "id": 1,
-    "title": "Vegetarian Pasta",
-    "description": "Simple tomato pasta.",
-    "servings": 2,
-    "ingredients": ["pasta", "tomato", "garlic", "olive oil"],
+    "id": 101,
+    "title": "Mushroom Garlic Udon",
+    "description": "Chewy noodles with soy-butter mushrooms.",
+    "servings": 3,
+    "ingredients": ["udon", "mushroom", "garlic", "soy sauce", "butter"],
     "instructions": [
-      "Boil the pasta.",
-      "Cook the sauce.",
-      "Combine and serve."
+      "Cook the udon.",
+      "Saute the mushrooms with garlic.",
+      "Toss with sauce and serve."
     ],
     "isVegetarian": true
   },
   {
-    "id": 2,
-    "title": "Chicken Rice Bowl",
-    "description": "Chicken with rice and vegetables.",
-    "servings": 4,
-    "ingredients": ["chicken", "rice", "broccoli", "soy sauce"],
+    "id": 102,
+    "title": "Spicy Tofu Lettuce Wraps",
+    "description": "Crisp lettuce wraps with savory tofu filling.",
+    "servings": 2,
+    "ingredients": ["tofu", "lettuce", "ginger", "garlic", "chili sauce"],
     "instructions": [
-      "Cook the rice.",
-      "Cook the chicken.",
-      "Serve together."
+      "Crumble and season the tofu.",
+      "Cook until lightly crisp.",
+      "Spoon into lettuce cups and serve."
+    ],
+    "isVegetarian": true
+  },
+  {
+    "id": 103,
+    "title": "Herbed Salmon Couscous",
+    "description": "Light salmon bowl with lemony couscous.",
+    "servings": 2,
+    "ingredients": ["salmon", "couscous", "lemon", "parsley", "olive oil"],
+    "instructions": [
+      "Cook the couscous.",
+      "Pan-sear the salmon.",
+      "Serve with herbs and lemon."
     ],
     "isVegetarian": false
   }

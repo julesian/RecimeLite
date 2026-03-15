@@ -9,6 +9,13 @@ import SwiftUI
 
 struct RecipesView: View {
     @StateObject private var viewModel: RecipesViewModel
+    @State private var isSearchVisible = false
+    @State private var searchText = ""
+    @State private var activeSearchText = ""
+
+    enum Constants {
+        static let searchDebounceNanoseconds: UInt64 = 350_000_000
+    }
     
     init(viewModel: RecipesViewModel = RecipesView.makeViewModel()) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -16,27 +23,62 @@ struct RecipesView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            BrandNavigationBarView()
+            navigationBar
 
-            Group {
-                if viewModel.isLoading,
-                   viewModel.recipes.isEmpty
-                {
-                    progressView
-                } else if
-                    let message = viewModel.errorMessage,
-                    viewModel.recipes.isEmpty
-                {
-                    contentUnavailableView(errorMessage: message)
-                } else {
-                    listView
-                }
+            if isSearchVisible {
+                searchBarView
             }
-            .task {
-                await viewModel.loadRecipes()
-            }
+
+            contentView
         }
         .background(Color.backgroundPrimary)
+    }
+    
+    private var navigationBar: some View {
+        BrandNavigationBarView(
+            trailingSystemImage: "magnifyingglass",
+            trailingAction: {
+                isSearchVisible.toggle()
+
+                if !isSearchVisible {
+                    searchText = ""
+                    activeSearchText = ""
+
+                    Task {
+                        await viewModel.loadRecipes()
+                    }
+                }
+            }
+        )
+    }
+    
+    private var contentView: some View {
+        Group {
+            if viewModel.isLoading,
+               viewModel.recipes.isEmpty
+            {
+                progressView
+            } else if
+                let message = viewModel.errorMessage,
+                viewModel.recipes.isEmpty
+            {
+                contentUnavailableView(errorMessage: message)
+            } else {
+                listView
+            }
+        }
+        .task {
+            await viewModel.loadRecipes()
+        }
+        .task(id: searchText) {
+            guard isSearchVisible else { return }
+
+            try? await Task.sleep(nanoseconds: Constants.searchDebounceNanoseconds)
+            guard !Task.isCancelled else { return }
+
+            activeSearchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+            await viewModel.searchRecipes(query: searchText)
+        }
     }
     
     private var progressView: some View {
@@ -53,10 +95,21 @@ struct RecipesView: View {
     }
     
     private var listView: some View {
-        recipeListView(viewModel.recipes)
+        recipeListView(displayedRecipes)
             .refreshable {
-                await viewModel.loadRecipes()
+                if isSearchVisible,
+                   !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                {
+                    await viewModel.searchRecipes(query: searchText)
+                } else {
+                    await viewModel.loadRecipes()
+                }
             }
+    }
+
+    private var displayedRecipes: [Recipe] {
+        let trimmedQuery = activeSearchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmedQuery.isEmpty ? viewModel.recipes : viewModel.searchedRecipes
     }
 
     private var skeletonListView: some View {
@@ -75,6 +128,32 @@ struct RecipesView: View {
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .background(Color.backgroundPrimary)
+    }
+
+    private var searchBarView: some View {
+        HStack(spacing: 10) {
+            Image(systemName: "magnifyingglass")
+                .foregroundStyle(.textSecondary)
+
+            TextField("Search recipes", text: $searchText)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+                .primaryTextStyle()
+
+            if !searchText.isEmpty {
+                Button {
+                    searchText = ""
+                    activeSearchText = ""
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundStyle(.textSecondary)
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .background(Color.foregroundPrimary)
     }
     
     func recipeItemView(_ recipe: Recipe) -> some View {
@@ -111,8 +190,12 @@ private extension RecipesView {
         let networkClient = NetworkClient()
         let service = RecipeService(networkClient: networkClient)
         let repository = RecipeRepository(recipeService: service)
-        let useCase = FetchRecipesUseCase(recipeRepository: repository)
+        let fetchUseCase = FetchRecipesUseCase(recipeRepository: repository)
+        let searchUseCase = SearchRecipesUseCase(recipeRepository: repository)
 
-        return RecipesViewModel(fetchRecipesUseCase: useCase)
+        return RecipesViewModel(
+            fetchRecipesUseCase: fetchUseCase,
+            searchRecipesUseCase: searchUseCase
+        )
     }
 }

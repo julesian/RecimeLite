@@ -50,7 +50,7 @@ final class RecipeService: RecipeServiceProtocol {
                 instructionQuery: instructionQuery
             ),
             as: [RecipeResponse].self,
-            behavior: .willDeliver(speed: .slow)
+            behavior: .willDeliver(speed: .fast)
         )
     #else
         try await networkClient.request(
