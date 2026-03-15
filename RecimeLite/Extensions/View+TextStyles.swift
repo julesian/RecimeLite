@@ -1,19 +1,34 @@
 import SwiftUI
 
+// Note: for simplicity I put both font and the style, can be separated if needed
+
 extension View {
     func primaryTextStyle() -> some View {
-        foregroundStyle(.textPrimary)
+        font(.headline)
+            .foregroundStyle(.textPrimary)
     }
 
     func secondaryTextStyle() -> some View {
-        foregroundStyle(.textSecondary)
+        font(.subheadline)
+            .foregroundStyle(.textSecondary)
+    }
+    
+    func teritaryTextStyle() -> some View {
+        font(.caption)
+            .foregroundStyle(.textSecondary)
+    }
+
+    func bottomBarTextStyle() -> some View {
+        font(.caption)
+            .foregroundStyle(.iconTintSecondary)
     }
 
     func capsuleTextStyle(
         foregroundColor: Color,
         backgroundColor: Color
     ) -> some View {
-        foregroundStyle(foregroundColor)
+        font(.caption)
+            .foregroundStyle(foregroundColor)
             .padding(.horizontal, 8)
             .padding(.vertical, 4)
             .background(backgroundColor)

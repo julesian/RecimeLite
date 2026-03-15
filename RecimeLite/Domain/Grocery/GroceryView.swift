@@ -9,6 +9,9 @@ import SwiftUI
 
 struct GroceryView: View {
     var body: some View {
-        ComingSoonView(title: "Grocery")
+        NavigationView {
+            ComingSoonView(title: "Grocery")
+        }
+        .styleWithBrand()
     }
 }

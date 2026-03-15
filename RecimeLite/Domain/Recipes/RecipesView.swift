@@ -30,10 +30,7 @@ struct RecipesView: View {
                     listView
                 }
             }
-            .navigationTitle("Recipes")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(.foregroundPrimary, for: .navigationBar)
-            .toolbarBackgroundVisibility(.visible, for: .navigationBar)
+            .styleWithBrand()
             .task {
                 await viewModel.loadRecipes()
             }
@@ -72,14 +69,12 @@ struct RecipesView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Text(recipe.title)
-                    .font(.headline)
                     .primaryTextStyle()
 
                 Spacer()
 
                 if recipe.isVegetarian {
                     Text("Vegetarian")
-                        .font(.caption)
                         .capsuleTextStyle(
                             foregroundColor: .textPrimary,
                             backgroundColor: .accentGreen.opacity(0.50)
@@ -88,12 +83,10 @@ struct RecipesView: View {
             }
 
             Text(recipe.description)
-                .font(.subheadline)
                 .secondaryTextStyle()
 
             Text("Servings: \(recipe.servings)")
-                .font(.caption)
-                .secondaryTextStyle()
+                .teritaryTextStyle()
         }
         .padding(16)
         .background(Color.foregroundPrimary)

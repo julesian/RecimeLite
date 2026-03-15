@@ -31,7 +31,7 @@ struct HomeView: View {
     }
 
     @ViewBuilder
-    private var currentView: some View {
+    private var currentView: some View { 
         switch selectedTab {
         case .recipes: RecipesView()
         case .plan: PlanView()
@@ -61,7 +61,7 @@ struct HomeView: View {
                     .font(.system(size: Constants.iconSize))
 
                 Text(tab.title)
-                    .font(.caption)
+                    .bottomBarTextStyle()
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 4)
