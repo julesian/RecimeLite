@@ -32,6 +32,8 @@ struct RecipesView: View {
             }
             .navigationTitle("Recipes")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(.foregroundPrimary, for: .navigationBar)
+            .toolbarBackgroundVisibility(.visible, for: .navigationBar)
             .task {
                 await viewModel.loadRecipes()
             }
@@ -53,8 +55,13 @@ struct RecipesView: View {
     private var listView: some View {
         List(viewModel.recipes) { recipe in
             recipeItemView(recipe)
+                .listRowBackground(Color.backgroundPrimary)
+                .listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets(top: 6, leading: 0, bottom: 0, trailing: 0))
         }
         .listStyle(.plain)
+        .scrollContentBackground(.hidden)
+        .background(Color.backgroundPrimary)
         .refreshable {
             await viewModel.loadRecipes()
         }
@@ -88,7 +95,8 @@ struct RecipesView: View {
                 .font(.caption)
                 .secondaryTextStyle()
         }
-        .padding(.vertical, 4)
+        .padding(16)
+        .background(Color.foregroundPrimary)
     }
 }
 
