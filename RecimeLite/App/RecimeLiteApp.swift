@@ -11,7 +11,7 @@ import SwiftUI
 struct RecimeLiteApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AppRootView(viewModel: AppRootViewModel())
         }
     }
 }

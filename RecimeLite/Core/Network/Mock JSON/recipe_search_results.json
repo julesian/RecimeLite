@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "title": "Vegetarian Pasta",
+    "description": "Simple tomato pasta.",
+    "servings": 2,
+    "ingredients": ["pasta", "tomato", "garlic", "olive oil"],
+    "instructions": [
+      "Boil the pasta.",
+      "Cook the sauce.",
+      "Combine and serve."
+    ],
+    "isVegetarian": true
+  },
+  {
+    "id": 2,
+    "title": "Chicken Rice Bowl",
+    "description": "Chicken with rice and vegetables.",
+    "servings": 4,
+    "ingredients": ["chicken", "rice", "broccoli", "soy sauce"],
+    "instructions": [
+      "Cook the rice.",
+      "Cook the chicken.",
+      "Serve together."
+    ],
+    "isVegetarian": false
+  }
+]
