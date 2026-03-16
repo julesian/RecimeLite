@@ -15,7 +15,6 @@ struct HomeView: View {
         static let iconSize = 24.0
         static let itemSpacing = 4.0
         static let startupSpacingMultiplier = 2.0
-        static let bottomBarAnimationDelay = 0.6
         static let bottomBarAnimationDuration = 0.42
     }
 
@@ -106,12 +105,8 @@ struct HomeView: View {
     private func animateBottomBarTransition() {
         guard !hasAnimatedBottomBar else { return }
 
-        Task { @MainActor in
-            try? await Task.sleep(for: .seconds(Constants.bottomBarAnimationDelay))
-
-            withAnimation(.easeInOut(duration: Constants.bottomBarAnimationDuration)) {
-                hasAnimatedBottomBar = true
-            }
+        withAnimation(.easeInOut(duration: Constants.bottomBarAnimationDuration)) {
+            hasAnimatedBottomBar = true
         }
     }
 }

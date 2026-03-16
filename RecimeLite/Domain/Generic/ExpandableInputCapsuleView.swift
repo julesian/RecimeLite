@@ -6,6 +6,8 @@ struct ExpandableInputCapsuleView: View {
         static let textTrailingPadding = 6.0
         static let contentSpacing = 10.0
         static let textAnimationDuration = 0.12
+        static let expandAnimationDuration = 0.28
+        static let expandedLeadingIconWidth = 16.0
     }
 
     @Binding var text: String
@@ -61,21 +63,26 @@ struct ExpandableInputCapsuleView: View {
     }
 
     var body: some View {
-        HStack(spacing: Constants.contentSpacing) {
-            if isExpanded, let inputContextImage {
+        HStack(spacing: isExpanded ? Constants.contentSpacing : 0) {
+            if let inputContextImage {
                 Image(systemName: inputContextImage)
                     .foregroundStyle(.textSecondary)
+                    .frame(width: isExpanded ? Constants.expandedLeadingIconWidth : 0)
+                    .opacity(isExpanded ? 1 : 0)
+                    .clipped()
             }
 
-            if isExpanded {
                 PersistentSubmitTextField(
                     text: $text,
                     placeholder: placeholder,
-                    isFocused: managesFocus ? isFocused : nil,
+                    shouldFocus: managesFocus ? isFocused : nil,
                     isSubmitEnabled: isActionEnabled,
                     onSubmit: onSubmit
                 )
-            }
+            .frame(maxWidth: isExpanded ? .infinity : 0, alignment: .leading)
+            .opacity(isExpanded ? 1 : 0)
+            .allowsHitTesting(isExpanded)
+            .clipped()
 
             Button(action: onAction) {
                 Image(systemName: displayedActionSystemImage)
@@ -98,6 +105,7 @@ struct ExpandableInputCapsuleView: View {
                 .stroke(Color.divider, lineWidth: 1)
         }
         .clipShape(Capsule())
+        .animation(.easeInOut(duration: Constants.expandAnimationDuration), value: isExpanded)
         .animation(.easeInOut(duration: Constants.textAnimationDuration), value: text.isEmpty)
         .onChange(of: isExpanded) { _, expanded in
             isFocused = expanded

@@ -23,6 +23,7 @@ struct RecipesNavigationBarView: View {
     let hasActiveFilters: Bool
 
     let onCollapseSearch: () -> Void
+    let onClearSearch: () -> Void
     let onFilterTap: () -> Void
 
     var body: some View {
@@ -114,6 +115,8 @@ struct RecipesNavigationBarView: View {
     private func trailingButtonTapped() {
         if isSearchExpanded {
             if !searchText.isEmpty {
+                onClearSearch()
+            } else {
                 onCollapseSearch()
             }
         } else {

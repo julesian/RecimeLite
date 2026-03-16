@@ -19,6 +19,7 @@ struct RecipesView: View {
     enum Constants {
         static let searchDebounceNanoseconds: UInt64 = 350_000_000
         static let bottomContentInset = 140.0
+        static let searchCollapseAnimationDuration = 0.28
     }
     
     init(viewModel: RecipesViewModel = RecipesView.makeViewModel()) {
@@ -58,6 +59,7 @@ struct RecipesView: View {
             isSearchExpanded: $isSearchVisible,
             hasActiveFilters: filters.hasActiveFilters,
             onCollapseSearch: closeSearch,
+            onClearSearch: clearSearch,
             onFilterTap: openFilters
         )
     }
@@ -203,12 +205,40 @@ struct RecipesView: View {
     }
 
     private func closeSearch() {
-        isSearchVisible = false
+        Task {
+            await MainActor.run {
+                dismissKeyboard()
+                withAnimation(.easeInOut(duration: Constants.searchCollapseAnimationDuration)) {
+                    isSearchVisible = false
+                }
+            }
+
+            try? await Task.sleep(
+                for: .seconds(Constants.searchCollapseAnimationDuration)
+            )
+
+            await MainActor.run {
+                searchText = ""
+                activeSearchText = ""
+            }
+
+            await viewModel.loadRecipes()
+        }
+    }
+
+    private func clearSearch() {
         searchText = ""
         activeSearchText = ""
 
         Task {
-            await viewModel.loadRecipes()
+            if filters.hasActiveFilters {
+                await viewModel.searchRecipes(
+                    query: "",
+                    filters: filters
+                )
+            } else {
+                await viewModel.loadRecipes()
+            }
         }
     }
 

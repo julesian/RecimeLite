@@ -5,7 +5,7 @@ struct PersistentSubmitTextField: UIViewRepresentable {
     @Binding var text: String
 
     let placeholder: String
-    let isFocused: Bool?
+    let shouldFocus: Bool?
     let isSubmitEnabled: Bool
     let onSubmit: (() -> Void)?
 
@@ -47,10 +47,10 @@ struct PersistentSubmitTextField: UIViewRepresentable {
             uiView.placeholder = placeholder
         }
 
-        if let isFocused {
-            if isFocused, !uiView.isFirstResponder {
+        if let shouldFocus {
+            if shouldFocus, !uiView.isFirstResponder {
                 uiView.becomeFirstResponder()
-            } else if !isFocused, uiView.isFirstResponder {
+            } else if !shouldFocus, uiView.isFirstResponder {
                 uiView.resignFirstResponder()
             }
         }
