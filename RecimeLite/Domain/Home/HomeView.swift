@@ -48,8 +48,8 @@ struct HomeView: View {
                 GroceryView()
             }
 
-            tabContent(.more) {
-                MoreView()
+            tabContent(.about) {
+                AboutView()
             }
         }
     }
@@ -120,7 +120,7 @@ private extension HomeView {
         case recipes
         case plan
         case grocery
-        case more
+        case about
 
         var id: String { rawValue }
 
@@ -129,7 +129,7 @@ private extension HomeView {
             case .recipes: "Recipes"
             case .plan: "Plan"
             case .grocery: "Grocery"
-            case .more: "More"
+            case .about: "About"
             }
         }
 
@@ -138,7 +138,7 @@ private extension HomeView {
             case .recipes: "book"
             case .plan: "calendar"
             case .grocery: "cart"
-            case .more: "ellipsis.circle"
+            case .about: "person.circle"
             }
         }
     }

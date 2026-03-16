@@ -75,7 +75,7 @@ enum MockResponseBehavior {
             switch self {
             case .instant: 0.0
             case .fast: 0.05
-            case .slow: 8.0
+            case .slow: 4.0
             case .forever: .infinity
             case .customDuration(let seconds): seconds
             }
