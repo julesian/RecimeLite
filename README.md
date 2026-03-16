@@ -12,7 +12,7 @@ RecimeLite is a SwiftUI iOS sample app focused on browsing recipes, searching wi
 
 ### Run the App
 
-1. Open [RecimeLite.xcodeproj](/Users/julesiangilos/experiments/RecimeLite/RecimeLite.xcodeproj).
+1. Open RecimeLite.xcodeproj.
 2. Let Xcode resolve Swift Package dependencies.
 3. Select the `RecimeLite` scheme.
 4. Build and run on a simulator or device.
@@ -27,8 +27,8 @@ In `DEBUG`, the recipe flows currently use bundled mock JSON instead of a live b
 
 Relevant files:
 
-- [recipes.json](/Users/julesiangilos/experiments/RecimeLite/RecimeLite/Mock/recipes.json)
-- [recipe_search_results.json](/Users/julesiangilos/experiments/RecimeLite/RecimeLite/Mock/recipe_search_results.json)
+- recipes.json
+- recipe_search_results.json
 
 ## High-Level Architecture Overview
 
