@@ -45,7 +45,6 @@ struct RecipesFilterSheetView: View {
         }
         .background(Color.backgroundPrimary)
         .contentShape(Rectangle())
-        .ignoresSafeArea(.keyboard, edges: .bottom)
         .onTapGesture {
             dismissKeyboard()
         }
@@ -248,6 +247,7 @@ struct RecipesFilterSheetView: View {
             .padding(.vertical, 16)
         }
         .background(Color.foregroundPrimary)
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 
     private func applyFilters() {
