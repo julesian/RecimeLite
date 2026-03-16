@@ -35,6 +35,49 @@ Relevant files:
 - recipes.json
 - recipe_search_results.json
 
+### How `mockRequest` Is Used
+
+`mockRequest` is used at the service layer, currently in `RecipeService`.
+
+In `DEBUG`, the service calls:
+
+```swift
+try await networkClient.mockRequest(
+    RecipeRequest.fetchRecipes,
+    as: [RecipeResponse].self,
+    behavior: .willDeliver(speed: .slow)
+)
+```
+
+and for search:
+
+```swift
+try await networkClient.mockRequest(
+    RecipeRequest.searchRecipes(...),
+    as: [RecipeResponse].self,
+    behavior: .willDeliver(speed: .fast)
+)
+```
+
+Outside `DEBUG`, the same service uses the real network path with:
+
+```swift
+try await networkClient.request(...)
+```
+
+So if you want to change a feature between mock and live behavior, the main place to update is:
+
+- `Domain/Recipes/Services/RecipeService.swift`
+
+The mock file name itself comes from the request type:
+
+- `RecipeRequest.fetchRecipes` -> `recipes.json`
+- `RecipeRequest.searchRecipes` -> `recipe_search_results.json`
+
+That mapping currently lives in:
+
+- `Domain/Recipes/Requests/RecipeRequest.swift`
+
 ## High-Level Architecture Overview
 
 The app uses a lightweight layered architecture with clear separation between UI, domain, and networking concerns.
