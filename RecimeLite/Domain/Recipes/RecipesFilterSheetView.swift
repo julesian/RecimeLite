@@ -45,6 +45,7 @@ struct RecipesFilterSheetView: View {
         }
         .background(Color.backgroundPrimary)
         .contentShape(Rectangle())
+        .animation(.easeInOut(duration: 0.2), value: viewModel.filters)
         .onTapGesture {
             dismissKeyboard()
         }
@@ -158,7 +159,9 @@ struct RecipesFilterSheetView: View {
         TagListView(
             title: "Include Ingredients",
             placeholder: "Add ingredient",
-            tags: $viewModel.filters.includeIngredients
+            tags: $viewModel.filters.includeIngredients,
+            isInputExpanded: $viewModel.isIncludeIngredientsInputExpanded,
+            inputText: $viewModel.includeIngredientsInputText
         )
     }
 
@@ -166,7 +169,9 @@ struct RecipesFilterSheetView: View {
         TagListView(
             title: "Exclude Ingredients",
             placeholder: "Exclude ingredient",
-            tags: $viewModel.filters.excludeIngredients
+            tags: $viewModel.filters.excludeIngredients,
+            isInputExpanded: $viewModel.isExcludeIngredientsInputExpanded,
+            inputText: $viewModel.excludeIngredientsInputText
         )
     }
 
@@ -209,7 +214,7 @@ struct RecipesFilterSheetView: View {
     private var applyButtonSection: some View {
         VStack(spacing: 0) {
             HStack(spacing: 12) {
-                Button(action: viewModel.resetFilters) {
+                Button(action: resetFilters) {
                     Text("Reset")
                         .font(.headline)
                         .foregroundStyle(Color.accentOrange)
@@ -242,6 +247,13 @@ struct RecipesFilterSheetView: View {
 
     private func applyFilters() {
         onApply(viewModel.filters)
+    }
+
+    private func resetFilters() {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            viewModel.resetFilters()
+        }
+        dismissKeyboard()
     }
 }
 

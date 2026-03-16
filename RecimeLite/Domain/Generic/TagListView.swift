@@ -17,9 +17,8 @@ struct TagListView: View {
     let title: String
     let placeholder: String
     @Binding var tags: [String]
-
-    @State private var isInputExpanded = false
-    @State private var inputText = ""
+    @Binding var isInputExpanded: Bool
+    @Binding var inputText: String
 
     var body: some View {
         VStack(alignment: .leading, spacing: contentSpacing) {
@@ -220,19 +219,27 @@ private struct PreviewContainer: View {
     @State private var excludeIngredients = [
         "peanuts", "shrimp", "milk"
     ]
+    @State private var includeInputText = ""
+    @State private var excludeInputText = ""
+    @State private var isIncludeExpanded = false
+    @State private var isExcludeExpanded = false
 
     var body: some View {
         VStack(spacing: 16) {
             TagListView(
                 title: "Include Ingredients",
                 placeholder: "Include ingredient",
-                tags: $includeIngredients
+                tags: $includeIngredients,
+                isInputExpanded: $isIncludeExpanded,
+                inputText: $includeInputText
             )
 
             TagListView(
                 title: "Exclude Ingredients",
                 placeholder: "Exclude ingredient",
-                tags: $excludeIngredients
+                tags: $excludeIngredients,
+                isInputExpanded: $isExcludeExpanded,
+                inputText: $excludeInputText
             )
         }
         .padding()
