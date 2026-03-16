@@ -2,9 +2,10 @@ import SwiftUI
 
 struct SwitchControlView: View {
     enum Constants {
-        static let controlWidth = 72.0
-        static let controlHeight = 44.0
-        static let knobSize = 36.0
+        static let controlWidth = 78.0
+        static let controlHeight = 38.0
+        static let buttonWidth = 36.0
+        static let buttonHeight = 28.0
         static let horizontalPadding = 4.0
     }
 
@@ -24,9 +25,9 @@ struct SwitchControlView: View {
                             .stroke(Color.divider, lineWidth: 1)
                     }
 
-                Circle()
+                Capsule()
                     .fill(Color.backgroundPrimary)
-                    .frame(width: Constants.knobSize, height: Constants.knobSize)
+                    .frame(width: Constants.buttonWidth, height: Constants.buttonHeight)
                     .padding(.horizontal, Constants.horizontalPadding)
             }
             .frame(width: Constants.controlWidth, height: Constants.controlHeight)

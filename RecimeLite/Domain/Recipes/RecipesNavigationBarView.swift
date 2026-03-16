@@ -2,20 +2,21 @@ import SwiftUI
 
 struct RecipesNavigationBarView: View {
     enum Constants {
-        static let searchFieldHeight = 44.0
-        static let searchIconSize = 16.0
-        static let filterIconSize = 16.0
+        static let searchFieldHeight = 38.0
+        static let searchIconSize = 15.0
+        static let filterIconSize = 15.0
         static let logoHeight = 26.0
         static let horizontalPadding = 12.0
         static let verticalPadding = 16.0
         static let animationDuration = 0.28
         static let itemSpacing = 8.0
-        static let filterButtonWidth = 44.0
+        static let filterButtonWidth = searchFieldHeight
         static let logoOffsetX = -24.0
     }
 
     @Binding var searchText: String
     @Binding var isSearchExpanded: Bool
+    let hasActiveFilters: Bool
 
     let onCollapseSearch: () -> Void
     let onFilterTap: () -> Void
@@ -93,22 +94,13 @@ struct RecipesNavigationBarView: View {
     }
 
     private var filterButton: some View {
-        Button(action: onFilterTap) {
-            Image(systemName: "line.3.horizontal.decrease")
-                .font(.system(size: Constants.filterIconSize, weight: .semibold))
-                .foregroundStyle(.textPrimary)
-                .frame(
-                    width: Constants.searchFieldHeight,
-                    height: Constants.searchFieldHeight
-                )
-                .background(Color.backgroundPrimary)
-                .clipShape(Circle())
-                .overlay {
-                    Circle()
-                        .stroke(Color.divider, lineWidth: 1)
-                }
-        }
-        .buttonStyle(.plain)
+        CircularIconButtonView(
+            systemImage: "line.3.horizontal.decrease",
+            size: Constants.searchFieldHeight,
+            iconSize: Constants.filterIconSize,
+            style: hasActiveFilters ? .accent : .standard,
+            action: onFilterTap
+        )
     }
 
     private func trailingButtonTapped() {

@@ -14,34 +14,37 @@ struct IncrementControlView: View {
     }
 
     enum Constants {
-        static let controlHeight = 44.0
-        static let buttonSize = 36.0
-        static let iconSize = 16.0
+        static let controlHeight = 38.0
+        static let buttonSize = 30.0
+        static let iconSize = 15.0
         static let horizontalPadding = 6.0
         static let contentSpacing = 8.0
-        static let valueWidth = 44.0
+        static let valueWidth = 40.0
     }
 
     @Binding var value: Int
 
     let minimumValue: Int?
     let maximumValue: Int?
+    let showsAnyForZeroValue: Bool
 
     init(
         value: Binding<Int>,
         minimumValue: Int? = nil,
-        maximumValue: Int? = nil
+        maximumValue: Int? = nil,
+        showsAnyForZeroValue: Bool = false
     ) {
         _value = value
         self.minimumValue = minimumValue
         self.maximumValue = maximumValue
+        self.showsAnyForZeroValue = showsAnyForZeroValue
     }
 
     var body: some View {
         HStack(spacing: Constants.contentSpacing) {
             actionButton(.decrement)
 
-            Text("\(value)")
+            Text(displayValue)
                 .primaryTextStyle()
                 .frame(width: Constants.valueWidth)
 
@@ -69,6 +72,14 @@ struct IncrementControlView: View {
         .buttonStyle(.plain)
         .disabled(!canPerform(action))
         .opacity(canPerform(action) ? 1 : 0.45)
+    }
+
+    private var displayValue: String {
+        if showsAnyForZeroValue, value == 0 {
+            return "Any"
+        }
+
+        return "\(value)"
     }
 
     private var canDecrement: Bool {

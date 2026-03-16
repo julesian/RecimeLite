@@ -36,9 +36,17 @@ final class RecipesViewModel: ObservableObject {
     }
 
     func searchRecipes(query: String) async {
-        let trimmedQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        await searchRecipes(query: query, filters: RecipesFilter())
+    }
 
-        if trimmedQuery.isEmpty {
+    func searchRecipes(
+        query: String,
+        filters: RecipesFilter
+    ) async {
+        let trimmedQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedInstructionQuery = filters.instructionQuery.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        if trimmedQuery.isEmpty, !filters.hasActiveFilters {
             searchedRecipes = []
             return
         }
@@ -50,12 +58,12 @@ final class RecipesViewModel: ObservableObject {
 
         do {
             searchedRecipes = try await searchRecipesUseCase.execute(
-                query: trimmedQuery,
-                vegetarian: nil,
-                servings: nil,
-                includeIngredients: nil,
-                excludeIngredients: nil,
-                instructionQuery: nil
+                query: trimmedQuery.isEmpty ? nil : trimmedQuery,
+                vegetarian: filters.vegetarianOnly ? true : nil,
+                servings: filters.servings == 0 ? nil : filters.servings,
+                includeIngredients: filters.includeIngredients.isEmpty ? nil : filters.includeIngredients,
+                excludeIngredients: filters.excludeIngredients.isEmpty ? nil : filters.excludeIngredients,
+                instructionQuery: trimmedInstructionQuery.isEmpty ? nil : trimmedInstructionQuery
             ).map(Recipe.init)
         } catch {
             errorMessage = error.localizedDescription

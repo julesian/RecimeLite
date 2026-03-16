@@ -22,15 +22,17 @@ struct TagListView: View {
     @State private var inputText = ""
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Constants.containerSpacing) {
+        VStack(alignment: .leading, spacing: contentSpacing) {
             headerView
 
-            WrappingTagLayout(
-                horizontalSpacing: Constants.tagSpacing,
-                verticalSpacing: Constants.tagSpacing
-            ) {
-                ForEach(tags, id: \.self) { tag in
-                    tagView(tag)
+            if !tags.isEmpty {
+                WrappingTagLayout(
+                    horizontalSpacing: Constants.tagSpacing,
+                    verticalSpacing: Constants.tagSpacing
+                ) {
+                    ForEach(tags, id: \.self) { tag in
+                        tagView(tag)
+                    }
                 }
             }
         }
@@ -52,6 +54,10 @@ struct TagListView: View {
             guard isInputExpanded else { return }
             collapseInput()
         }
+    }
+
+    private var contentSpacing: CGFloat {
+        tags.isEmpty ? 0 : Constants.containerSpacing
     }
 
     private var headerView: some View {

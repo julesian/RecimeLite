@@ -3,6 +3,11 @@ import SwiftUI
 // Note: for simplicity I put both font and the style, can be separated if needed
 
 extension View {
+    func sheetHeaderTextStyle() -> some View {
+        font(.title2.weight(.bold))
+            .foregroundStyle(.accentBlue)
+    }
+
     func primaryTextStyle() -> some View {
         font(.headline)
             .foregroundStyle(.textPrimary)
