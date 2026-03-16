@@ -143,10 +143,10 @@ Common control patterns were extracted into reusable components such as:
 
 ### Assumptions
 
-- Mock data shape is representative of the eventual backend contract.
-- Mock data for search will only return the same response, since making a working backend is out of scope.
+- Mock data for search will only return the same response, since making a working backend which does the filter and query logic is out of scope.
 - Dietary attributes are provided as a list of strings.
 - A servings value of `0` means “Any” and should not be sent to the search query.
+- Mock data is simple, I only focused on the ones that I can use to the UI.
 
 ### Tradeoffs
 
@@ -158,8 +158,9 @@ Common control patterns were extracted into reusable components such as:
 ## Known Limitations
 
 - The app currently depends heavily on local mocks for recipe fetch/search behavior in debug mode.
-- Some custom UIKit-backed text input behavior was introduced to avoid SwiftUI keyboard/focus issues, so that area may need extra regression testing.
+- Some custom UIKit-backed text input behavior was introduced to avoid SwiftUI keyboard/focus issues.
 - Little routing and dependency injection structure is applied due to scope.
+- Not using native iOS navigation bar and bottom bar.
 
 ## Project Structure
 
