@@ -8,3 +8,8 @@ struct LoadingView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
+
+#Preview {
+    LoadingView(title: "Loading recipes...")
+        .background(Color.backgroundPrimary)
+}

@@ -32,3 +32,7 @@ struct ComingSoonView: View {
         .background(Color.backgroundPrimary)
     }
 }
+
+#Preview {
+    ComingSoonView(title: "Plan")
+}

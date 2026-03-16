@@ -15,3 +15,9 @@ struct RecimeImageView: View {
             .foregroundStyle(.accentBlue)
     }
 }
+
+#Preview {
+    RecimeImageView()
+        .padding()
+        .background(Color.foregroundPrimary)
+}

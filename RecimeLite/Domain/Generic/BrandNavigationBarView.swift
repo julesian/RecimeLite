@@ -41,3 +41,8 @@ struct BrandNavigationBarView: View {
         .background(Color.foregroundPrimary)
     }
 }
+
+#Preview {
+    BrandNavigationBarView()
+        .background(Color.backgroundPrimary)
+}
