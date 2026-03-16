@@ -34,7 +34,8 @@ struct RecipesView: View {
         RecipesNavigationBarView(
             searchText: $searchText,
             isSearchExpanded: $isSearchVisible,
-            onCollapseSearch: closeSearch
+            onCollapseSearch: closeSearch,
+            onFilterTap: openFilters
         )
     }
     
@@ -156,6 +157,9 @@ struct RecipesView: View {
         Task {
             await viewModel.loadRecipes()
         }
+    }
+
+    private func openFilters() {
     }
 }
 
