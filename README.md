@@ -13,7 +13,6 @@ RecimeLite is a SwiftUI iOS sample app focused on browsing recipes, searching wi
   <img src="https://github.com/user-attachments/assets/2cb861d4-d382-4dff-ba4a-461f0f609b33" width="180"/>
 </p>
 
-
 ## Demo
 
 https://github.com/user-attachments/assets/d640d401-777e-44c0-b3f5-8f8e500dba0c
@@ -192,9 +191,24 @@ RecimeLite/
   RecimeLiteUITests/
 ```
 
+Tests were not implemented
+
 ## Notes
 
 - I've put my CV in the About screen, if you want to take a look :D
 - Used Codex for assistive coding
 - Recreated Icons
 - Created Lottie animation for Splash Screen
+
+## TODOs that would've been nice
+
+- Dependency Injection
+- Routing structure
+- Pagination for Fetch recipes
+- Limit parameters for search
+- Make vegetarian filter list based instead of boolean / switch
+- Serving range instead of single number
+- Better Loading indicators
+- Error handling
+- Multi Recipe endpoint (List | Detail)
+- Data Caching
