@@ -45,7 +45,6 @@ struct RecipesFilterSheetView: View {
         }
         .background(Color.backgroundPrimary)
         .contentShape(Rectangle())
-        .animation(.easeInOut(duration: 0.2), value: viewModel.filters)
         .onTapGesture {
             dismissKeyboard()
         }
@@ -185,7 +184,7 @@ struct RecipesFilterSheetView: View {
                 .primaryTextStyle()
 
             ExpandableInputCapsuleView(
-                text: $viewModel.filters.instructionQuery,
+                text: $viewModel.instructionQueryInputText,
                 isExpanded: .constant(true),
                 placeholder: "Search within instructions",
                 collapsedImage: "magnifyingglass",
@@ -194,8 +193,9 @@ struct RecipesFilterSheetView: View {
                 height: Constants.controlHeight,
                 iconSize: Constants.controlIconSize,
                 hidesActionWhenExpandedAndEmpty: false,
+                managesFocus: false,
                 onAction: {
-                    viewModel.filters.instructionQuery = ""
+                    viewModel.clearInstructionQuery()
                 }
             )
         }
@@ -250,7 +250,7 @@ struct RecipesFilterSheetView: View {
     }
 
     private func applyFilters() {
-        onApply(viewModel.filters)
+        onApply(viewModel.appliedFilters)
     }
 
     private func resetFilters() {

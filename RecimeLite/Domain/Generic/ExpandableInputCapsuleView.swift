@@ -24,6 +24,7 @@ struct ExpandableInputCapsuleView: View {
     let iconSize: CGFloat
     let hidesActionWhenExpandedAndEmpty: Bool
     let isActionEnabled: Bool
+    let managesFocus: Bool
     let onSubmit: (() -> Void)?
     let onAction: () -> Void
 
@@ -40,6 +41,7 @@ struct ExpandableInputCapsuleView: View {
         iconSize: CGFloat,
         hidesActionWhenExpandedAndEmpty: Bool,
         isActionEnabled: Bool = true,
+        managesFocus: Bool = true,
         onSubmit: (() -> Void)? = nil,
         onAction: @escaping () -> Void
     ) {
@@ -53,6 +55,7 @@ struct ExpandableInputCapsuleView: View {
         self.iconSize = iconSize
         self.hidesActionWhenExpandedAndEmpty = hidesActionWhenExpandedAndEmpty
         self.isActionEnabled = isActionEnabled
+        self.managesFocus = managesFocus
         self.onSubmit = onSubmit
         self.onAction = onAction
     }
@@ -68,7 +71,7 @@ struct ExpandableInputCapsuleView: View {
                 PersistentSubmitTextField(
                     text: $text,
                     placeholder: placeholder,
-                    isFocused: isFocused,
+                    isFocused: managesFocus ? isFocused : nil,
                     isSubmitEnabled: isActionEnabled,
                     onSubmit: onSubmit
                 )

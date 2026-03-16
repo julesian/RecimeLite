@@ -32,11 +32,11 @@ struct SplashView: View {
                     loopMode: .playOnce,
                     shouldPlay: shouldPlayAnimation
                 )
-                    .frame(
-                        width: Constants.animationWidth,
-                        height: Constants.animationHeight
-                    )
-                    .offset(y: logoOffsetY(for: geometry))
+                .frame(
+                    width: Constants.animationWidth,
+                    height: Constants.animationHeight
+                )
+                .offset(y: logoOffsetY(for: geometry))
             }
         }
         .task {

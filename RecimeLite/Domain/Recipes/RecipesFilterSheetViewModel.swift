@@ -4,6 +4,7 @@ import Combine
 @MainActor
 final class RecipesSheetFilterViewModel: ObservableObject {
     @Published var filters: RecipesFilter
+    @Published var instructionQueryInputText: String
     @Published var includeIngredientsInputText = ""
     @Published var excludeIngredientsInputText = ""
     @Published var isIncludeIngredientsInputExpanded = false
@@ -11,6 +12,7 @@ final class RecipesSheetFilterViewModel: ObservableObject {
 
     init(filters: RecipesFilter) {
         self.filters = filters
+        instructionQueryInputText = filters.instructionQuery
     }
 
     var canAddIncludeIngredient: Bool {
@@ -29,10 +31,22 @@ final class RecipesSheetFilterViewModel: ObservableObject {
 
     func resetFilters() {
         filters = RecipesFilter()
+        instructionQueryInputText = ""
         includeIngredientsInputText = ""
         excludeIngredientsInputText = ""
         isIncludeIngredientsInputExpanded = false
         isExcludeIngredientsInputExpanded = false
+    }
+
+    func clearInstructionQuery() {
+        instructionQueryInputText = ""
+    }
+
+    var appliedFilters: RecipesFilter {
+        var appliedFilters = filters
+        appliedFilters.instructionQuery = instructionQueryInputText
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        return appliedFilters
     }
 
     func addIncludeIngredient() {
