@@ -57,6 +57,10 @@ struct ExpandableInputCapsuleView: View {
         .padding(.trailing, isExpanded ? Constants.textTrailingPadding : 0)
         .frame(height: height)
         .background(Color.backgroundPrimary)
+        .overlay {
+            Capsule()
+                .stroke(Color.divider, lineWidth: 1)
+        }
         .clipShape(Capsule())
         .animation(.easeInOut(duration: Constants.textAnimationDuration), value: text.isEmpty)
         .onChange(of: isExpanded) { _, expanded in

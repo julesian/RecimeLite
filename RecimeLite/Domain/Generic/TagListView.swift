@@ -3,7 +3,6 @@ import SwiftUI
 struct TagListView: View {
     enum Constants {
         static let containerSpacing = 16.0
-        static let headerSpacing = 12.0
         static let tagSpacing = 10.0
         static let containerPadding = 16.0
         static let tagHorizontalPadding = 12.0
@@ -16,6 +15,7 @@ struct TagListView: View {
     }
 
     let title: String
+    let placeholder: String
     @Binding var tags: [String]
 
     @State private var isInputExpanded = false
@@ -42,19 +42,30 @@ struct TagListView: View {
                 style: .continuous
             )
         )
+        .contentShape(
+            RoundedRectangle(
+                cornerRadius: Constants.containerCornerRadius,
+                style: .continuous
+            )
+        )
+        .onTapGesture {
+            guard isInputExpanded else { return }
+            collapseInput()
+        }
     }
 
     private var headerView: some View {
-        HStack(spacing: Constants.headerSpacing) {
+        ZStack(alignment: .trailing) {
             Text(title)
                 .primaryTextStyle()
-
-            Spacer()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .opacity(isInputExpanded ? 0 : 1)
+                .animation(.easeInOut(duration: 0.18), value: isInputExpanded)
 
             ExpandableInputCapsuleView(
                 text: $inputText,
                 isExpanded: $isInputExpanded,
-                placeholder: "Add ingredient",
+                placeholder: placeholder,
                 collapsedImage: "plus",
                 inputContextImage: nil,
                 inputActionImage: "plus",
@@ -64,7 +75,7 @@ struct TagListView: View {
                 onAction: addTag
             )
             .frame(
-                width: isInputExpanded ? Constants.expandedInputWidth : Constants.collapsedInputWidth,
+                maxWidth: isInputExpanded ? .infinity : Constants.collapsedInputWidth,
                 alignment: .trailing
             )
             .animation(.easeInOut(duration: 0.28), value: isInputExpanded)
@@ -109,6 +120,13 @@ struct TagListView: View {
         } else {
             isInputExpanded = true
         }
+    }
+
+    private func collapseInput() {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            isInputExpanded = false
+        }
+        inputText = ""
     }
 }
 
@@ -201,11 +219,13 @@ private struct PreviewContainer: View {
         VStack(spacing: 16) {
             TagListView(
                 title: "Include Ingredients",
+                placeholder: "Include ingredient",
                 tags: $includeIngredients
             )
 
             TagListView(
                 title: "Exclude Ingredients",
+                placeholder: "Exclude ingredient",
                 tags: $excludeIngredients
             )
         }

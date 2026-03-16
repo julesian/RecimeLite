@@ -50,6 +50,10 @@ struct IncrementControlView: View {
         .padding(.horizontal, Constants.horizontalPadding)
         .frame(height: Constants.controlHeight)
         .background(Color.foregroundPrimary)
+        .overlay {
+            Capsule()
+                .stroke(Color.divider, lineWidth: 1)
+        }
         .clipShape(Capsule())
     }
 
