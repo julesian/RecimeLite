@@ -1,6 +1,9 @@
 import SwiftUI
 import UIKit
 
+// Using UIKit here because SwiftUI's TextField was briefly dropping focus on submit,
+// which made the tag-entry flow feel pretty rough. TextFields in SwiftUI is a bit painful
+// to work around as per my experience T_T.
 struct PersistentSubmitTextField: UIViewRepresentable {
     @Binding var text: String
 
@@ -48,11 +51,10 @@ struct PersistentSubmitTextField: UIViewRepresentable {
         }
 
         if let shouldFocus {
-            if shouldFocus, !uiView.isFirstResponder {
-                uiView.becomeFirstResponder()
-            } else if !shouldFocus, uiView.isFirstResponder {
-                uiView.resignFirstResponder()
-            }
+            context.coordinator.updateFocus(
+                shouldFocus,
+                for: uiView
+            )
         }
     }
 }
@@ -63,6 +65,7 @@ extension PersistentSubmitTextField {
 
         var isSubmitEnabled: Bool
         var isUpdatingFromSwiftUI = false
+        var lastRequestedFocus: Bool?
         let onSubmit: (() -> Void)?
 
         init(
@@ -90,6 +93,22 @@ extension PersistentSubmitTextField {
 
             onSubmit?()
             return false
+        }
+
+        func updateFocus(
+            _ shouldFocus: Bool,
+            for textField: UITextField
+        ) {
+            guard lastRequestedFocus != shouldFocus else { return }
+            lastRequestedFocus = shouldFocus
+
+            DispatchQueue.main.async {
+                if shouldFocus, !textField.isFirstResponder {
+                    textField.becomeFirstResponder()
+                } else if !shouldFocus, textField.isFirstResponder {
+                    textField.resignFirstResponder()
+                }
+            }
         }
     }
 }

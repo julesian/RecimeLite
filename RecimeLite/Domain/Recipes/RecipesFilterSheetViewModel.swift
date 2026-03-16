@@ -18,14 +18,16 @@ final class RecipesSheetFilterViewModel: ObservableObject {
     var canAddIncludeIngredient: Bool {
         canAddTag(
             includeIngredientsInputText,
-            to: filters.includeIngredients
+            to: filters.includeIngredients,
+            excluding: filters.excludeIngredients
         )
     }
 
     var canAddExcludeIngredient: Bool {
         canAddTag(
             excludeIngredientsInputText,
-            to: filters.excludeIngredients
+            to: filters.excludeIngredients,
+            excluding: filters.includeIngredients
         )
     }
 
@@ -52,23 +54,26 @@ final class RecipesSheetFilterViewModel: ObservableObject {
     func addIncludeIngredient() {
         addTag(
             from: &includeIngredientsInputText,
-            to: &filters.includeIngredients
+            to: &filters.includeIngredients,
+            excluding: filters.excludeIngredients
         )
     }
 
     func addExcludeIngredient() {
         addTag(
             from: &excludeIngredientsInputText,
-            to: &filters.excludeIngredients
+            to: &filters.excludeIngredients,
+            excluding: filters.includeIngredients
         )
     }
 
     private func addTag(
         from inputText: inout String,
-        to tags: inout [String]
+        to tags: inout [String],
+        excluding otherTags: [String]
     ) {
         let trimmedText = inputText.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard canAddTag(trimmedText, to: tags) else { return }
+        guard canAddTag(trimmedText, to: tags, excluding: otherTags) else { return }
 
         tags.append(trimmedText)
         inputText = ""
@@ -76,12 +81,15 @@ final class RecipesSheetFilterViewModel: ObservableObject {
 
     private func canAddTag(
         _ inputText: String,
-        to tags: [String]
+        to tags: [String],
+        excluding otherTags: [String]
     ) -> Bool {
         let trimmedText = inputText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedText.isEmpty else { return false }
 
-        return !tags.contains {
+        let allExistingTags = tags + otherTags
+
+        return !allExistingTags.contains {
             $0.trimmingCharacters(in: .whitespacesAndNewlines)
                 .localizedCaseInsensitiveCompare(trimmedText) == .orderedSame
         }
