@@ -17,10 +17,23 @@ struct RecipesFilterSheetView: View {
         static let headerLabelHeight = 22.0
     }
 
-    @Binding var filters: RecipesFilter
+    @StateObject private var viewModel: RecipesSheetFilterViewModel
 
+    // Maybe move this to view model when there is more complicated stuff going on
     let onClose: () -> Void
-    let onApply: () -> Void
+    let onApply: (RecipesFilter) -> Void
+
+    init(
+        filters: RecipesFilter,
+        onClose: @escaping () -> Void,
+        onApply: @escaping (RecipesFilter) -> Void
+    ) {
+        _viewModel = StateObject(
+            wrappedValue: RecipesSheetFilterViewModel(filters: filters)
+        )
+        self.onClose = onClose
+        self.onApply = onApply
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -95,7 +108,7 @@ struct RecipesFilterSheetView: View {
                 .primaryTextStyle()
 
             IncrementControlView(
-                value: $filters.servings,
+                value: $viewModel.filters.servings,
                 minimumValue: 0,
                 showsAnyForZeroValue: true
             )
@@ -128,7 +141,7 @@ struct RecipesFilterSheetView: View {
             Text("Vegetarian")
                 .primaryTextStyle()
 
-            SwitchControlView(isOn: $filters.vegetarianOnly)
+            SwitchControlView(isOn: $viewModel.filters.vegetarianOnly)
         }
         .padding(Constants.cardPadding)
         .frame(maxWidth: .infinity)
@@ -145,7 +158,7 @@ struct RecipesFilterSheetView: View {
         TagListView(
             title: "Include Ingredients",
             placeholder: "Add ingredient",
-            tags: $filters.includeIngredients
+            tags: $viewModel.filters.includeIngredients
         )
     }
 
@@ -153,7 +166,7 @@ struct RecipesFilterSheetView: View {
         TagListView(
             title: "Exclude Ingredients",
             placeholder: "Exclude ingredient",
-            tags: $filters.excludeIngredients
+            tags: $viewModel.filters.excludeIngredients
         )
     }
 
@@ -163,7 +176,7 @@ struct RecipesFilterSheetView: View {
                 .primaryTextStyle()
 
             ExpandableInputCapsuleView(
-                text: $filters.instructionQuery,
+                text: $viewModel.filters.instructionQuery,
                 isExpanded: .constant(true),
                 placeholder: "Search within instructions",
                 collapsedImage: "magnifyingglass",
@@ -173,7 +186,7 @@ struct RecipesFilterSheetView: View {
                 iconSize: Constants.controlIconSize,
                 hidesActionWhenExpandedAndEmpty: false,
                 onAction: {
-                    filters.instructionQuery = ""
+                    viewModel.filters.instructionQuery = ""
                 }
             )
         }
@@ -196,7 +209,7 @@ struct RecipesFilterSheetView: View {
     private var applyButtonSection: some View {
         VStack(spacing: 0) {
             HStack(spacing: 12) {
-                Button(action: resetFilters) {
+                Button(action: viewModel.resetFilters) {
                     Text("Reset")
                         .font(.headline)
                         .foregroundStyle(Color.accentOrange)
@@ -210,7 +223,7 @@ struct RecipesFilterSheetView: View {
                         .clipShape(Capsule())
                 }
 
-                Button(action: onApply) {
+                Button(action: applyFilters) {
                     Text("Apply")
                         .font(.headline)
                         .foregroundStyle(Color.foregroundPrimary)
@@ -227,8 +240,8 @@ struct RecipesFilterSheetView: View {
         .background(Color.foregroundPrimary)
     }
 
-    private func resetFilters() {
-        filters = RecipesFilter()
+    private func applyFilters() {
+        onApply(viewModel.filters)
     }
 }
 
@@ -238,13 +251,11 @@ struct RecipesFilterSheetView: View {
 }
 
 private struct PreviewContainer: View {
-    @State private var filters = RecipesFilter()
-
     var body: some View {
         RecipesFilterSheetView(
-            filters: $filters,
+            filters: RecipesFilter(),
             onClose: {},
-            onApply: {}
+            onApply: { _ in }
         )
     }
 }

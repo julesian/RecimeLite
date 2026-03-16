@@ -13,8 +13,7 @@ struct RecipesView: View {
     @State private var isFiltersPresented = false
     @State private var searchText = ""
     @State private var activeSearchText = ""
-    @State private var draftFilters = RecipesFilter()
-    @State private var activeFilters = RecipesFilter()
+    @State private var filters = RecipesFilter()
 
     enum Constants {
         static let searchDebounceNanoseconds: UInt64 = 350_000_000
@@ -33,7 +32,7 @@ struct RecipesView: View {
         .background(Color.backgroundPrimary)
         .sheet(isPresented: $isFiltersPresented) {
             RecipesFilterSheetView(
-                filters: $draftFilters,
+                filters: filters,
                 onClose: {
                     isFiltersPresented = false
                 },
@@ -48,7 +47,7 @@ struct RecipesView: View {
         RecipesNavigationBarView(
             searchText: $searchText,
             isSearchExpanded: $isSearchVisible,
-            hasActiveFilters: activeFilters.hasActiveFilters,
+            hasActiveFilters: filters.hasActiveFilters,
             onCollapseSearch: closeSearch,
             onFilterTap: openFilters
         )
@@ -81,7 +80,7 @@ struct RecipesView: View {
             activeSearchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
             await viewModel.searchRecipes(
                 query: searchText,
-                filters: activeFilters
+                filters: filters
             )
         }
         .contentShape(Rectangle())
@@ -111,12 +110,12 @@ struct RecipesView: View {
                 {
                     await viewModel.searchRecipes(
                         query: searchText,
-                        filters: activeFilters
+                        filters: filters
                     )
-                } else if activeFilters.hasActiveFilters {
+                } else if filters.hasActiveFilters {
                     await viewModel.searchRecipes(
                         query: searchText,
-                        filters: activeFilters
+                        filters: filters
                     )
                 } else {
                     await viewModel.loadRecipes()
@@ -126,7 +125,7 @@ struct RecipesView: View {
 
     private var displayedRecipes: [Recipe] {
         let trimmedQuery = activeSearchText.trimmingCharacters(in: .whitespacesAndNewlines)
-        return trimmedQuery.isEmpty && !activeFilters.hasActiveFilters
+        return trimmedQuery.isEmpty && !filters.hasActiveFilters
             ? viewModel.recipes
             : viewModel.searchedRecipes
     }
@@ -187,22 +186,21 @@ struct RecipesView: View {
     }
 
     private func openFilters() {
-        draftFilters = activeFilters
         isFiltersPresented = true
     }
 
-    private func applyFilters() {
-        activeFilters = draftFilters
+    private func applyFilters(_ filters: RecipesFilter) {
+        self.filters = filters
         isFiltersPresented = false
 
         Task {
-            if activeFilters.hasActiveFilters
+            if filters.hasActiveFilters
                 || !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
             {
                 activeSearchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
                 await viewModel.searchRecipes(
                     query: searchText,
-                    filters: activeFilters
+                    filters: filters
                 )
             } else {
                 await viewModel.loadRecipes()
