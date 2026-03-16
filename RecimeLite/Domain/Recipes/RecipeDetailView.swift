@@ -12,6 +12,8 @@ struct RecipeDetailView: View {
         static let controlIconSize = 15.0
         static let bottomContentInset = 140.0
         static let titleSwapThreshold = 44.0
+        static let headerSwapOffset = 8.0
+        static let headerSwapAnimationDuration = 0.42
     }
 
     @StateObject private var viewModel: RecipeDetailViewModel
@@ -100,13 +102,18 @@ struct RecipeDetailView: View {
         ZStack {
             RecimeImageView()
                 .opacity(showsRecipeTitleInHeader ? 0 : 1)
+                .offset(y: showsRecipeTitleInHeader ? -Constants.headerSwapOffset : 0)
 
             Text(viewModel.title)
                 .headerTextStyle()
                 .lineLimit(1)
                 .opacity(showsRecipeTitleInHeader ? 1 : 0)
+                .offset(y: showsRecipeTitleInHeader ? 0 : Constants.headerSwapOffset)
         }
-        .animation(.easeInOut(duration: 0.2), value: showsRecipeTitleInHeader)
+        .animation(
+            .easeInOut(duration: Constants.headerSwapAnimationDuration),
+            value: showsRecipeTitleInHeader
+        )
     }
 
     private var trailingHeaderSpacer: some View {
