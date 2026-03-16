@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F10576442F68081F00930DA5 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = F10576432F68081F00930DA5 /* Lottie */; };
 		F1A018222F668EC800AA3D3C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F1A018212F668EC800AA3D3C /* Alamofire */; };
 /* End PBXBuildFile section */
 
@@ -38,7 +39,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
-				Resource/Info.plist,
 			);
 			target = F1A017B52F666C6500AA3D3C /* RecimeLite */;
 		};
@@ -71,6 +71,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1A018222F668EC800AA3D3C /* Alamofire in Frameworks */,
+				F10576442F68081F00930DA5 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +141,7 @@
 			name = RecimeLite;
 			packageProductDependencies = (
 				F1A018212F668EC800AA3D3C /* Alamofire */,
+				F10576432F68081F00930DA5 /* Lottie */,
 			);
 			productName = RecimeLite;
 			productReference = F1A017B62F666C6500AA3D3C /* RecimeLite.app */;
@@ -225,6 +227,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				F1A017E02F666D3A00AA3D3C /* XCRemoteSwiftPackageReference "Alamofire" */,
+				F10576422F68081F00930DA5 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F1A017B72F666C6500AA3D3C /* Products */;
@@ -658,6 +661,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		F10576422F68081F00930DA5 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.6.0;
+			};
+		};
 		F1A017E02F666D3A00AA3D3C /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
@@ -669,6 +680,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		F10576432F68081F00930DA5 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F10576422F68081F00930DA5 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
 		F1A018212F668EC800AA3D3C /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F1A017E02F666D3A00AA3D3C /* XCRemoteSwiftPackageReference "Alamofire" */;

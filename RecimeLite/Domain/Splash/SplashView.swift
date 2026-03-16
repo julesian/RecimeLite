@@ -7,31 +7,45 @@
 
 
 import SwiftUI
+import Lottie
 
 struct SplashView: View {
-    
     enum Constants {
-        static let logoWidth = 105.0
-        static let logoHeight = 85.0
+        static let animationFileName = "recime_splash_intro"
+        static let animationWidth = 194.0
+        static let animationHeight = 194.0
+        static let animationStartDelay = 0.6
         static let safeAreaOffsetMultiplier = 0.28
         static let maxUpwardOffset = 14.0
     }
+
+    @State private var shouldPlayAnimation = false
     
     var body: some View {
         GeometryReader { geometry in
             ZStack {
                 Color.backgroundSplash
                     .ignoresSafeArea()
-                
-                Image(.appLogoSplash)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+
+                LottieAnimationView(
+                    fileName: Constants.animationFileName,
+                    loopMode: .playOnce,
+                    shouldPlay: shouldPlayAnimation
+                )
                     .frame(
-                        width: Constants.logoWidth,
-                        height: Constants.logoHeight
+                        width: Constants.animationWidth,
+                        height: Constants.animationHeight
                     )
                     .offset(y: logoOffsetY(for: geometry))
             }
+        }
+        .task {
+            guard !shouldPlayAnimation else { return }
+
+            try? await Task.sleep(
+                for: .seconds(Constants.animationStartDelay)
+            )
+            shouldPlayAnimation = true
         }
     }
     
