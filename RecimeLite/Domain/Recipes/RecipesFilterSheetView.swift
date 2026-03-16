@@ -72,7 +72,7 @@ struct RecipesFilterSheetView: View {
     private var headerView: some View {
         HStack {
             Text("Filter")
-                .sheetHeaderTextStyle()
+                .headerTextStyle()
 
             Spacer()
 

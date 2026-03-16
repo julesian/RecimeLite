@@ -2,40 +2,65 @@
   {
     "id": 101,
     "title": "Mushroom Garlic Udon",
-    "description": "Chewy noodles with soy-butter mushrooms.",
+    "description": "Chewy udon noodles tossed with glossy soy-butter mushrooms and scallions.",
     "servings": 3,
-    "ingredients": ["udon", "mushroom", "garlic", "soy sauce", "butter"],
-    "instructions": [
-      "Cook the udon.",
-      "Saute the mushrooms with garlic.",
-      "Toss with sauce and serve."
+    "ingredients": [
+      { "name": "udon", "quantity": 2, "unit": "packs" },
+      { "name": "mushrooms", "quantity": 2, "unit": "cups" },
+      { "name": "garlic", "quantity": 3, "unit": "cloves" },
+      { "name": "soy sauce", "quantity": 2, "unit": "tbsp" },
+      { "name": "butter", "quantity": 1, "unit": "tbsp" },
+      { "name": "scallions", "quantity": 2, "unit": null }
     ],
-    "isVegetarian": true
+    "instructions": [
+      "Cook the udon according to package instructions.",
+      "Saute the mushrooms with garlic until deeply browned.",
+      "Add soy sauce and butter to create a glossy sauce.",
+      "Toss with noodles and finish with scallions."
+    ],
+    "dietaryAttributes": ["Vegetarian"]
   },
   {
     "id": 102,
     "title": "Spicy Tofu Lettuce Wraps",
-    "description": "Crisp lettuce wraps with savory tofu filling.",
+    "description": "Crisp lettuce cups filled with spicy tofu, ginger, and crunchy vegetables.",
     "servings": 2,
-    "ingredients": ["tofu", "lettuce", "ginger", "garlic", "chili sauce"],
+    "ingredients": [
+      { "name": "firm tofu", "quantity": 1, "unit": "block" },
+      { "name": "butter lettuce", "quantity": 1, "unit": "head" },
+      { "name": "ginger", "quantity": 1, "unit": "tbsp" },
+      { "name": "garlic", "quantity": 2, "unit": "cloves" },
+      { "name": "chili sauce", "quantity": 2, "unit": "tbsp" },
+      { "name": "carrot", "quantity": 1, "unit": null },
+      { "name": "soy sauce", "quantity": 2, "unit": "tbsp" }
+    ],
     "instructions": [
-      "Crumble and season the tofu.",
-      "Cook until lightly crisp.",
+      "Crumble the tofu and season with soy sauce and chili sauce.",
+      "Cook with ginger and garlic until lightly crisp.",
+      "Add shredded carrot for crunch.",
       "Spoon into lettuce cups and serve."
     ],
-    "isVegetarian": true
+    "dietaryAttributes": ["Vegetarian", "Vegan"]
   },
   {
     "id": 103,
     "title": "Herbed Salmon Couscous",
-    "description": "Light salmon bowl with lemony couscous.",
+    "description": "Tender salmon over lemony couscous with parsley and olive oil.",
     "servings": 2,
-    "ingredients": ["salmon", "couscous", "lemon", "parsley", "olive oil"],
-    "instructions": [
-      "Cook the couscous.",
-      "Pan-sear the salmon.",
-      "Serve with herbs and lemon."
+    "ingredients": [
+      { "name": "salmon fillet", "quantity": 2, "unit": null },
+      { "name": "couscous", "quantity": 1, "unit": "cup" },
+      { "name": "lemon", "quantity": 1, "unit": null },
+      { "name": "parsley", "quantity": 2, "unit": "tbsp" },
+      { "name": "olive oil", "quantity": 1, "unit": "tbsp" },
+      { "name": "cucumber", "quantity": 1, "unit": null }
     ],
-    "isVegetarian": false
+    "instructions": [
+      "Cook the couscous and fluff with lemon juice.",
+      "Pan-sear the salmon until just cooked through.",
+      "Fold parsley and olive oil into the couscous.",
+      "Serve with sliced cucumber and extra lemon."
+    ],
+    "dietaryAttributes": ["High Protein"]
   }
 ]

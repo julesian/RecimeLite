@@ -81,7 +81,7 @@ struct HomeView: View {
                     .font(.system(size: Constants.iconSize))
 
                 Text(tab.title)
-                    .bottomBarTextStyle()
+                    .bottomBarTextStyle(isSelected: tab == selectedTab)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 4)

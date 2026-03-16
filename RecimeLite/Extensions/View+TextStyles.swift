@@ -3,7 +3,7 @@ import SwiftUI
 // Note: for simplicity I put both font and the style, can be separated if needed
 
 extension View {
-    func sheetHeaderTextStyle() -> some View {
+    func headerTextStyle() -> some View {
         font(.title2.weight(.bold))
             .foregroundStyle(.accentBlue)
     }
@@ -23,9 +23,9 @@ extension View {
             .foregroundStyle(.textSecondary)
     }
 
-    func bottomBarTextStyle() -> some View {
+    func bottomBarTextStyle(isSelected: Bool = false) -> some View {
         font(.caption)
-            .foregroundStyle(.iconTintSecondary)
+            .foregroundStyle(isSelected ? .accentOrange : .iconTintSecondary)
     }
 
     func capsuleTextStyle(

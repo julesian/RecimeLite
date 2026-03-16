@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RecipesView: View {
     @StateObject private var viewModel: RecipesViewModel
+    @State private var navigationPath = NavigationPath()
     @State private var isSearchVisible = false
     @State private var isFiltersPresented = false
     @State private var searchText = ""
@@ -17,6 +18,7 @@ struct RecipesView: View {
 
     enum Constants {
         static let searchDebounceNanoseconds: UInt64 = 350_000_000
+        static let bottomContentInset = 140.0
     }
     
     init(viewModel: RecipesViewModel = RecipesView.makeViewModel()) {
@@ -24,22 +26,29 @@ struct RecipesView: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            navigationBar
+        NavigationStack(path: $navigationPath) {
+            VStack(spacing: 0) {
+                navigationBar
 
-            contentView
-        }
-        .background(Color.backgroundPrimary)
-        .sheet(isPresented: $isFiltersPresented) {
-            RecipesFilterSheetView(
-                filters: filters,
-                onClose: {
-                    isFiltersPresented = false
-                },
-                onApply: applyFilters
-            )
-            .presentationDetents([.large])
-            .presentationDragIndicator(.hidden)
+                contentView
+            }
+            .background(Color.backgroundPrimary)
+            .sheet(isPresented: $isFiltersPresented) {
+                RecipesFilterSheetView(
+                    filters: filters,
+                    onClose: {
+                        isFiltersPresented = false
+                    },
+                    onApply: applyFilters
+                )
+                .presentationDetents([.large])
+                .presentationDragIndicator(.hidden)
+            }
+            .navigationDestination(for: Recipe.self) { recipe in
+                RecipeDetailView(
+                    viewModel: RecipeDetailViewModel(recipe: recipe)
+                )
+            }
         }
     }
     
@@ -147,14 +156,23 @@ struct RecipesView: View {
 
     private func recipeListView(_ recipes: [Recipe]) -> some View {
         List(recipes) { recipe in
-            recipeItemView(recipe)
-                .listRowBackground(Color.backgroundPrimary)
-                .listRowSeparator(.hidden)
-                .listRowInsets(EdgeInsets(top: 6, leading: 0, bottom: 0, trailing: 0))
+            Button {
+                navigationPath.append(recipe)
+            } label: {
+                recipeItemView(recipe)
+            }
+            .buttonStyle(.plain)
+            .listRowBackground(Color.backgroundPrimary)
+            .listRowSeparator(.hidden)
+            .listRowInsets(EdgeInsets(top: 6, leading: 0, bottom: 0, trailing: 0))
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .background(Color.backgroundPrimary)
+        .safeAreaInset(edge: .bottom) {
+            Color.clear
+                .frame(height: Constants.bottomContentInset)
+        }
     }
     
     func recipeItemView(_ recipe: Recipe) -> some View {
@@ -168,8 +186,8 @@ struct RecipesView: View {
                 if recipe.isVegetarian {
                     Text("Vegetarian")
                         .capsuleTextStyle(
-                            foregroundColor: .textPrimary,
-                            backgroundColor: .accentGreen.opacity(0.50)
+                            foregroundColor: .foregroundPrimary,
+                            backgroundColor: .accentGreen
                         )
                 }
             }

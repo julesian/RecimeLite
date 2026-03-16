@@ -2,27 +2,217 @@
   {
     "id": 1,
     "title": "Vegetarian Pasta",
-    "description": "Simple tomato pasta.",
+    "description": "Comforting tomato pasta with garlic, basil, and a silky olive-oil finish.",
     "servings": 2,
-    "ingredients": ["pasta", "tomato", "garlic", "olive oil"],
-    "instructions": [
-      "Boil the pasta.",
-      "Cook the sauce.",
-      "Combine and serve."
+    "ingredients": [
+      { "name": "spaghetti", "quantity": 200, "unit": "g" },
+      { "name": "crushed tomato", "quantity": 2, "unit": "cups" },
+      { "name": "garlic", "quantity": 3, "unit": "cloves" },
+      { "name": "olive oil", "quantity": 2, "unit": "tbsp" },
+      { "name": "fresh basil", "quantity": 1, "unit": "handful" },
+      { "name": "salt and black pepper", "quantity": null, "unit": null }
     ],
-    "isVegetarian": true
+    "instructions": [
+      "Boil the spaghetti in salted water until al dente.",
+      "Warm olive oil in a pan and cook the garlic until fragrant.",
+      "Add crushed tomato and simmer until slightly thickened.",
+      "Toss the pasta into the sauce and finish with basil.",
+      "Season to taste and serve immediately."
+    ],
+    "dietaryAttributes": ["Vegetarian"]
   },
   {
     "id": 2,
     "title": "Chicken Rice Bowl",
-    "description": "Chicken with rice and vegetables.",
+    "description": "Savory chicken bowl with tender broccoli and glossy soy-garlic sauce.",
     "servings": 4,
-    "ingredients": ["chicken", "rice", "broccoli", "soy sauce"],
-    "instructions": [
-      "Cook the rice.",
-      "Cook the chicken.",
-      "Serve together."
+    "ingredients": [
+      { "name": "chicken breast", "quantity": 2, "unit": null },
+      { "name": "cooked rice", "quantity": 3, "unit": "cups" },
+      { "name": "broccoli florets", "quantity": 2, "unit": "cups" },
+      { "name": "soy sauce", "quantity": 3, "unit": "tbsp" },
+      { "name": "honey", "quantity": 1, "unit": "tbsp" },
+      { "name": "garlic", "quantity": 2, "unit": "cloves" },
+      { "name": "sesame oil", "quantity": 1, "unit": "tbsp" }
     ],
-    "isVegetarian": false
+    "instructions": [
+      "Cook or reheat the rice and keep warm.",
+      "Sear the chicken until browned and fully cooked through.",
+      "Steam or stir-fry the broccoli until tender-crisp.",
+      "Combine soy sauce, honey, garlic, and sesame oil in the pan.",
+      "Slice the chicken and serve everything together over rice."
+    ],
+    "dietaryAttributes": ["High Protein"]
+  },
+  {
+    "id": 3,
+    "title": "Coconut Chickpea Curry",
+    "description": "Creamy weeknight curry with chickpeas, spinach, and warm spices.",
+    "servings": 3,
+    "ingredients": [
+      { "name": "chickpeas", "quantity": 1, "unit": "can" },
+      { "name": "coconut milk", "quantity": 1, "unit": "cup" },
+      { "name": "spinach", "quantity": 2, "unit": "cups" },
+      { "name": "onion", "quantity": 1, "unit": null },
+      { "name": "garlic", "quantity": 2, "unit": "cloves" },
+      { "name": "curry powder", "quantity": 1, "unit": "tbsp" },
+      { "name": "cooked rice", "quantity": 1, "unit": "cup" }
+    ],
+    "instructions": [
+      "Saute onion and garlic until softened.",
+      "Add curry powder and cook until fragrant.",
+      "Stir in chickpeas and coconut milk, then simmer gently.",
+      "Fold in spinach until just wilted.",
+      "Serve over warm rice."
+    ],
+    "dietaryAttributes": ["Vegetarian", "Vegan", "Gluten Free"]
+  },
+  {
+    "id": 4,
+    "title": "Lemon Herb Salmon",
+    "description": "Bright salmon fillets with roasted vegetables and lemon-herb finish.",
+    "servings": 2,
+    "ingredients": [
+      { "name": "salmon fillet", "quantity": 2, "unit": null },
+      { "name": "zucchini", "quantity": 1, "unit": null },
+      { "name": "bell pepper", "quantity": 1, "unit": null },
+      { "name": "olive oil", "quantity": 1, "unit": "tbsp" },
+      { "name": "lemon", "quantity": 1, "unit": null },
+      { "name": "chopped parsley", "quantity": 1, "unit": "tbsp" },
+      { "name": "salt and black pepper", "quantity": null, "unit": null }
+    ],
+    "instructions": [
+      "Roast the vegetables until lightly caramelized.",
+      "Season the salmon and pan-sear until cooked through.",
+      "Finish with lemon juice and chopped parsley.",
+      "Serve the salmon alongside the vegetables."
+    ],
+    "dietaryAttributes": ["High Protein"]
+  },
+  {
+    "id": 5,
+    "title": "Roasted Veggie Couscous",
+    "description": "Colorful couscous bowl with roasted vegetables and citrus dressing.",
+    "servings": 3,
+    "ingredients": [
+      { "name": "couscous", "quantity": 1.5, "unit": "cups" },
+      { "name": "zucchini", "quantity": 1, "unit": null },
+      { "name": "carrot", "quantity": 2, "unit": null },
+      { "name": "bell pepper", "quantity": 1, "unit": null },
+      { "name": "olive oil", "quantity": 2, "unit": "tbsp" },
+      { "name": "lemon juice", "quantity": 1, "unit": "tbsp" }
+    ],
+    "instructions": [
+      "Roast the chopped vegetables until tender and caramelized.",
+      "Prepare the couscous and fluff with a fork.",
+      "Whisk olive oil and lemon juice together.",
+      "Toss everything together and serve warm."
+    ],
+    "dietaryAttributes": ["Vegetarian", "Vegan"]
+  },
+  {
+    "id": 6,
+    "title": "Turkey Chili Skillet",
+    "description": "Hearty one-pan chili with beans, tomatoes, and lean turkey.",
+    "servings": 4,
+    "ingredients": [
+      { "name": "ground turkey", "quantity": 500, "unit": "g" },
+      { "name": "kidney beans", "quantity": 1, "unit": "can" },
+      { "name": "crushed tomato", "quantity": 2, "unit": "cups" },
+      { "name": "onion", "quantity": 1, "unit": null },
+      { "name": "garlic", "quantity": 3, "unit": "cloves" },
+      { "name": "chili powder", "quantity": 1, "unit": "tbsp" }
+    ],
+    "instructions": [
+      "Cook the turkey with onion and garlic until browned.",
+      "Add chili powder and stir until fragrant.",
+      "Add beans and crushed tomato, then simmer.",
+      "Serve once thickened to your liking."
+    ],
+    "dietaryAttributes": ["High Protein", "Gluten Free"]
+  },
+  {
+    "id": 7,
+    "title": "Tofu Peanut Noodles",
+    "description": "Creamy peanut noodles with crisp tofu and fresh herbs.",
+    "servings": 2,
+    "ingredients": [
+      { "name": "rice noodles", "quantity": 180, "unit": "g" },
+      { "name": "firm tofu", "quantity": 1, "unit": "block" },
+      { "name": "peanut butter", "quantity": 2, "unit": "tbsp" },
+      { "name": "soy sauce", "quantity": 1, "unit": "tbsp" },
+      { "name": "lime juice", "quantity": 1, "unit": "tbsp" },
+      { "name": "cilantro", "quantity": 1, "unit": "handful" }
+    ],
+    "instructions": [
+      "Cook the noodles and set aside.",
+      "Pan-fry the tofu until golden on all sides.",
+      "Whisk peanut butter, soy sauce, and lime juice into a sauce.",
+      "Toss with noodles and finish with cilantro."
+    ],
+    "dietaryAttributes": ["Vegetarian"]
+  },
+  {
+    "id": 8,
+    "title": "Greek Chicken Wraps",
+    "description": "Fresh wraps with chicken, cucumber, yogurt, and herbs.",
+    "servings": 3,
+    "ingredients": [
+      { "name": "chicken thigh", "quantity": 400, "unit": "g" },
+      { "name": "flatbreads", "quantity": 3, "unit": null },
+      { "name": "cucumber", "quantity": 1, "unit": null },
+      { "name": "greek yogurt", "quantity": 0.5, "unit": "cup" },
+      { "name": "lemon juice", "quantity": 1, "unit": "tbsp" },
+      { "name": "dill", "quantity": 1, "unit": "tbsp" }
+    ],
+    "instructions": [
+      "Cook the chicken until browned and juicy.",
+      "Mix yogurt, lemon juice, and dill into a quick sauce.",
+      "Slice cucumber and warm the flatbreads.",
+      "Assemble the wraps and serve immediately."
+    ],
+    "dietaryAttributes": ["High Protein"]
+  },
+  {
+    "id": 9,
+    "title": "Miso Veggie Soup",
+    "description": "Light, soothing soup with mushrooms, tofu, and greens.",
+    "servings": 4,
+    "ingredients": [
+      { "name": "vegetable broth", "quantity": 4, "unit": "cups" },
+      { "name": "miso paste", "quantity": 2, "unit": "tbsp" },
+      { "name": "tofu", "quantity": 200, "unit": "g" },
+      { "name": "mushrooms", "quantity": 1.5, "unit": "cups" },
+      { "name": "spinach", "quantity": 2, "unit": "cups" },
+      { "name": "green onion", "quantity": 2, "unit": null }
+    ],
+    "instructions": [
+      "Warm the broth and simmer the mushrooms until tender.",
+      "Whisk in the miso paste gently off high heat.",
+      "Add tofu and spinach until heated through.",
+      "Finish with sliced green onion."
+    ],
+    "dietaryAttributes": ["Vegetarian", "Gluten Free"]
+  },
+  {
+    "id": 10,
+    "title": "Beef Broccoli Stir-Fry",
+    "description": "Quick savory stir-fry with tender beef and crisp broccoli.",
+    "servings": 3,
+    "ingredients": [
+      { "name": "beef strips", "quantity": 350, "unit": "g" },
+      { "name": "broccoli", "quantity": 2, "unit": "cups" },
+      { "name": "soy sauce", "quantity": 2, "unit": "tbsp" },
+      { "name": "oyster sauce", "quantity": 1, "unit": "tbsp" },
+      { "name": "garlic", "quantity": 2, "unit": "cloves" },
+      { "name": "rice", "quantity": 2, "unit": "cups" }
+    ],
+    "instructions": [
+      "Sear the beef quickly over high heat.",
+      "Cook the broccoli until bright green and crisp-tender.",
+      "Add garlic and sauces, then toss everything together.",
+      "Serve over warm rice."
+    ],
+    "dietaryAttributes": ["High Protein"]
   }
 ]
