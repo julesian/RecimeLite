@@ -2,6 +2,7 @@
 
 RecimeLite is a SwiftUI iOS sample app focused on browsing recipes, searching with filters, viewing recipe details.
 
+
 ## Setup Instructions
 
 ### Requirements
@@ -20,6 +21,7 @@ RecimeLite is a SwiftUI iOS sample app focused on browsing recipes, searching wi
 ### Dependencies
 
 - `Alamofire`
+- `Lottie`
 
 ### Mock Data
 
@@ -133,3 +135,5 @@ RecimeLite/
 
 - I've put my CV in the About screen, if you want to take a look :D
 - Used Codex for assistive coding
+- Recreated Icons
+- Created Lottie animation for Splash Screen
