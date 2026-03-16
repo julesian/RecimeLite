@@ -91,7 +91,7 @@ The app uses a lightweight layered architecture with clear separation between UI
 - `Extensions`
   - Shared view styling and convenience helpers.
 - `Resource` / `Mock`
-  - Bundled assets such as the CV PDF and mock API payloads.
+  - Bundled assets and mock API payloads.
 
 ### Feature Flow
 
