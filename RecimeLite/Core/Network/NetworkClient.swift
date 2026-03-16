@@ -62,6 +62,15 @@ final class NetworkClient: NetworkClientProtocol {
             throw NetworkError.fileNotFound(errorMessage)
         }
 
+        MockNetworkLogger.logRequest(
+            path: request.config.path,
+            method: request.config.method,
+            queryParameters: request.config.queryParameters,
+            bodyParameters: request.config.bodyParameters,
+            mockFileName: json,
+            responseType: type
+        )
+
         return try await MockResponseProvider.load(
             json,
             as: type,
@@ -70,6 +79,36 @@ final class NetworkClient: NetworkClientProtocol {
     }
     #endif
 }
+
+#if DEBUG
+private enum MockNetworkLogger {
+    static func logRequest<T>(
+        path: String,
+        method: HTTPMethod,
+        queryParameters: [String: Any]?,
+        bodyParameters: [String: Any]?,
+        mockFileName: String,
+        responseType: T.Type
+    ) {
+        print(
+            """
+            [Mock Request]
+            path: \(path)
+            method: \(method)
+            query: \(formatted(parameters: queryParameters))
+            body: \(formatted(parameters: bodyParameters))
+            mockFile: \(mockFileName).json
+            responseType: \(responseType)
+            """
+        )
+    }
+
+    private static func formatted(parameters: [String: Any]?) -> String {
+        guard let parameters, !parameters.isEmpty else { return "nil" }
+        return String(describing: parameters)
+    }
+}
+#endif
 
 fileprivate extension HTTPMethod {
     /// Alamofire's equivalent HTTPMethod from the agnostic HTTPMethod

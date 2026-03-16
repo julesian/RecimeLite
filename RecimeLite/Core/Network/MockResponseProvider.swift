@@ -50,13 +50,39 @@ enum MockResponseProvider {
 
         do {
             let data = try Data(contentsOf: url)
+            MockResponseLogger.logLoadedFile(fileName, data: data)
             let decoder = JSONDecoder()
-            return try decoder.decode(T.self, from: data)
+            let decodedResponse = try decoder.decode(T.self, from: data)
+            MockResponseLogger.logDecodedResponse(decodedResponse)
+            return decodedResponse
         } catch let error as DecodingError {
             throw NetworkError.decodingFailed(error)
         } catch {
             throw NetworkError.fileReadFailed(fileName)
         }
+    }
+}
+
+private enum MockResponseLogger {
+    static func logLoadedFile(_ fileName: String, data: Data) {
+        let payload = String(data: data, encoding: .utf8) ?? "<unreadable utf8 payload>"
+        print(
+            """
+            [Mock Response File]
+            file: \(fileName).json
+            payload:
+            \(payload)
+            """
+        )
+    }
+
+    static func logDecodedResponse<T>(_ response: T) {
+        print(
+            """
+            [Mock Decoded Response]
+            \(String(describing: response))
+            """
+        )
     }
 }
 

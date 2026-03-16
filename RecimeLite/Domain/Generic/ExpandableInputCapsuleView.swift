@@ -68,7 +68,7 @@ struct ExpandableInputCapsuleView: View {
                 PersistentSubmitTextField(
                     text: $text,
                     placeholder: placeholder,
-                    isFocused: $isFocused,
+                    isFocused: isFocused,
                     isSubmitEnabled: isActionEnabled,
                     onSubmit: onSubmit
                 )

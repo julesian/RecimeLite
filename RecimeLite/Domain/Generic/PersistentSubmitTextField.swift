@@ -5,14 +5,13 @@ struct PersistentSubmitTextField: UIViewRepresentable {
     @Binding var text: String
 
     let placeholder: String
-    @Binding var isFocused: Bool
+    let isFocused: Bool
     let isSubmitEnabled: Bool
     let onSubmit: (() -> Void)?
 
     func makeCoordinator() -> Coordinator {
         Coordinator(
             text: $text,
-            isFocused: $isFocused,
             isSubmitEnabled: isSubmitEnabled,
             onSubmit: onSubmit
         )
@@ -59,7 +58,6 @@ struct PersistentSubmitTextField: UIViewRepresentable {
 extension PersistentSubmitTextField {
     final class Coordinator: NSObject, UITextFieldDelegate {
         @Binding var text: String
-        @Binding var isFocused: Bool
 
         var isSubmitEnabled: Bool
         var isUpdatingFromSwiftUI = false
@@ -67,12 +65,10 @@ extension PersistentSubmitTextField {
 
         init(
             text: Binding<String>,
-            isFocused: Binding<Bool>,
             isSubmitEnabled: Bool,
             onSubmit: (() -> Void)?
         ) {
             _text = text
-            _isFocused = isFocused
             self.isSubmitEnabled = isSubmitEnabled
             self.onSubmit = onSubmit
         }
@@ -80,16 +76,11 @@ extension PersistentSubmitTextField {
         @objc
         func textDidChange(_ textField: UITextField) {
             guard !isUpdatingFromSwiftUI else { return }
+            let updatedText = textField.text ?? ""
 
-            text = textField.text ?? ""
-        }
-
-        func textFieldDidBeginEditing(_ textField: UITextField) {
-            isFocused = true
-        }
-
-        func textFieldDidEndEditing(_ textField: UITextField) {
-            isFocused = false
+            DispatchQueue.main.async {
+                self.text = updatedText
+            }
         }
 
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
