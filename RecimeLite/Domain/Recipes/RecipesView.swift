@@ -86,6 +86,11 @@ struct RecipesView: View {
         .contentShape(Rectangle())
         .onTapGesture {
             dismissKeyboard()
+
+            guard isSearchVisible else { return }
+            guard !hasSearchInput else { return }
+
+            isSearchVisible = false
         }
     }
     
@@ -128,6 +133,10 @@ struct RecipesView: View {
         return trimmedQuery.isEmpty && !filters.hasActiveFilters
             ? viewModel.recipes
             : viewModel.searchedRecipes
+    }
+
+    private var hasSearchInput: Bool {
+        !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     private var skeletonListView: some View {
