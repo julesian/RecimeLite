@@ -12,10 +12,14 @@ struct RecipesNavigationBarView: View {
         static let itemSpacing = 8.0
         static let filterButtonWidth = searchFieldHeight
         static let logoOffsetX = -24.0
+        static let startupOffsetY = 8.0
+        static let startupAnimationDelay = 0.08
+        static let startupAnimationDuration = 0.42
     }
 
     @Binding var searchText: String
     @Binding var isSearchExpanded: Bool
+    @State private var hasAnimatedHeader = false
     let hasActiveFilters: Bool
 
     let onCollapseSearch: () -> Void
@@ -39,13 +43,15 @@ struct RecipesNavigationBarView: View {
         }
         .background(Color.foregroundPrimary)
         .animation(.easeInOut(duration: Constants.animationDuration), value: isSearchExpanded)
+        .onAppear(perform: animateHeaderTransition)
     }
     
     private var recimeImageView: some View {
         RecimeImageView(height: Constants.logoHeight)
             .frame(maxWidth: .infinity, alignment: .center)
-            .opacity(isSearchExpanded ? 0 : 1)
+            .opacity(isSearchExpanded ? 0 : headerContentOpacity)
             .offset(x: isSearchExpanded ? Constants.logoOffsetX : 0)
+            .offset(y: headerContentVerticalOffset)
     }
     
     private func searchView(currentWidth: CGFloat) -> some View {
@@ -76,6 +82,8 @@ struct RecipesNavigationBarView: View {
             hidesActionWhenExpandedAndEmpty: true,
             onAction: trailingButtonTapped
         )
+        .opacity(headerContentOpacity)
+        .offset(y: headerContentVerticalOffset)
     }
 
     private var filterButtonWidth: CGFloat {
@@ -110,6 +118,26 @@ struct RecipesNavigationBarView: View {
             }
         } else {
             isSearchExpanded = true
+        }
+    }
+
+    private var headerContentOpacity: Double {
+        hasAnimatedHeader ? 1 : 0
+    }
+
+    private var headerContentVerticalOffset: CGFloat {
+        hasAnimatedHeader ? 0 : Constants.startupOffsetY
+    }
+
+    private func animateHeaderTransition() {
+        guard !hasAnimatedHeader else { return }
+
+        Task { @MainActor in
+            try? await Task.sleep(for: .seconds(Constants.startupAnimationDelay))
+
+            withAnimation(.easeInOut(duration: Constants.startupAnimationDuration)) {
+                hasAnimatedHeader = true
+            }
         }
     }
 }

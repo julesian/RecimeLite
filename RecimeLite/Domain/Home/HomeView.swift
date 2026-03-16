@@ -9,10 +9,14 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var selectedTab: Tab = .recipes
+    @State private var hasAnimatedBottomBar = false
 
     enum Constants {
         static let iconSize = 24.0
         static let itemSpacing = 4.0
+        static let startupSpacingMultiplier = 2.0
+        static let bottomBarAnimationDelay = 0.6
+        static let bottomBarAnimationDuration = 0.42
     }
 
     var body: some View {
@@ -61,7 +65,7 @@ struct HomeView: View {
     }
 
     private var bottomBar: some View {
-        HStack(spacing: Constants.itemSpacing) {
+        HStack(spacing: bottomBarSpacing) {
             ForEach(Tab.allCases) { tab in
                 itemView(from: tab)
             }
@@ -70,6 +74,14 @@ struct HomeView: View {
         .background(Color.foregroundPrimary)
         .clipShape(Capsule())
         .shadow(color: .shadow, radius: 14, y: 6)
+        .opacity(hasAnimatedBottomBar ? 1 : 0)
+        .onAppear(perform: animateBottomBarTransition)
+    }
+
+    private var bottomBarSpacing: Double {
+        hasAnimatedBottomBar
+            ? Constants.itemSpacing
+            : Constants.itemSpacing * Constants.startupSpacingMultiplier
     }
     
     private func itemView(from tab: Tab) -> some View {
@@ -88,6 +100,18 @@ struct HomeView: View {
             .foregroundStyle(tab == selectedTab ? .accentOrange : .iconTintSecondary)
         }
         .buttonStyle(.plain)
+    }
+
+    private func animateBottomBarTransition() {
+        guard !hasAnimatedBottomBar else { return }
+
+        Task { @MainActor in
+            try? await Task.sleep(for: .seconds(Constants.bottomBarAnimationDelay))
+
+            withAnimation(.easeInOut(duration: Constants.bottomBarAnimationDuration)) {
+                hasAnimatedBottomBar = true
+            }
+        }
     }
 }
 
