@@ -38,7 +38,6 @@ struct SwitchControlView: View {
 #Preview {
     SwitchControlPreview()
         .padding()
-        .background(Color.backgroundPrimary)
 }
 
 private struct SwitchControlPreview: View {
@@ -57,5 +56,6 @@ private struct SwitchControlPreview: View {
 
             SwitchControlView(isOn: $isEnabled)
         }
+        .background(Color.foregroundPrimary)
     }
 }
