@@ -51,6 +51,8 @@ For recipe data, the typical flow is:
 
 `View -> ViewModel -> UseCase -> Repository -> Service -> NetworkClient / MockResponseProvider`
 
+This is using MVVM + Clean architecture.
+
 Examples:
 
 - `RecipesView` drives loading, debounced search, and filter presentation.
