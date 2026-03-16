@@ -86,6 +86,7 @@ struct HomeView: View {
     
     private func itemView(from tab: Tab) -> some View {
         Button {
+            dismissKeyboard()
             selectedTab = tab
         } label: {
             VStack(spacing: 4) {

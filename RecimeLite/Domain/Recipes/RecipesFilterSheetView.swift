@@ -161,7 +161,9 @@ struct RecipesFilterSheetView: View {
             placeholder: "Add ingredient",
             tags: $viewModel.filters.includeIngredients,
             isInputExpanded: $viewModel.isIncludeIngredientsInputExpanded,
-            inputText: $viewModel.includeIngredientsInputText
+            inputText: $viewModel.includeIngredientsInputText,
+            isActionEnabled: viewModel.canAddIncludeIngredient,
+            onSubmitTag: viewModel.addIncludeIngredient
         )
     }
 
@@ -171,7 +173,9 @@ struct RecipesFilterSheetView: View {
             placeholder: "Exclude ingredient",
             tags: $viewModel.filters.excludeIngredients,
             isInputExpanded: $viewModel.isExcludeIngredientsInputExpanded,
-            inputText: $viewModel.excludeIngredientsInputText
+            inputText: $viewModel.excludeIngredientsInputText,
+            isActionEnabled: viewModel.canAddExcludeIngredient,
+            onSubmitTag: viewModel.addExcludeIngredient
         )
     }
 

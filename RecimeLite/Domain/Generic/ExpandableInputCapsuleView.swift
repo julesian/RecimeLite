@@ -23,9 +23,39 @@ struct ExpandableInputCapsuleView: View {
     let height: CGFloat
     let iconSize: CGFloat
     let hidesActionWhenExpandedAndEmpty: Bool
+    let isActionEnabled: Bool
+    let onSubmit: (() -> Void)?
     let onAction: () -> Void
 
-    @FocusState private var isFocused: Bool
+    @State private var isFocused = false
+
+    init(
+        text: Binding<String>,
+        isExpanded: Binding<Bool>,
+        placeholder: String,
+        collapsedImage: String,
+        inputContextImage: String?,
+        inputActionImage: String,
+        height: CGFloat,
+        iconSize: CGFloat,
+        hidesActionWhenExpandedAndEmpty: Bool,
+        isActionEnabled: Bool = true,
+        onSubmit: (() -> Void)? = nil,
+        onAction: @escaping () -> Void
+    ) {
+        _text = text
+        _isExpanded = isExpanded
+        self.placeholder = placeholder
+        self.collapsedImage = collapsedImage
+        self.inputContextImage = inputContextImage
+        self.inputActionImage = inputActionImage
+        self.height = height
+        self.iconSize = iconSize
+        self.hidesActionWhenExpandedAndEmpty = hidesActionWhenExpandedAndEmpty
+        self.isActionEnabled = isActionEnabled
+        self.onSubmit = onSubmit
+        self.onAction = onAction
+    }
 
     var body: some View {
         HStack(spacing: Constants.contentSpacing) {
@@ -35,11 +65,13 @@ struct ExpandableInputCapsuleView: View {
             }
 
             if isExpanded {
-                TextField(placeholder, text: $text)
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled()
-                    .primaryTextStyle()
-                    .focused($isFocused)
+                PersistentSubmitTextField(
+                    text: $text,
+                    placeholder: placeholder,
+                    isFocused: $isFocused,
+                    isSubmitEnabled: isActionEnabled,
+                    onSubmit: onSubmit
+                )
             }
 
             Button(action: onAction) {
@@ -51,6 +83,7 @@ struct ExpandableInputCapsuleView: View {
                     .clipShape(Circle())
                     .opacity(actionOpacity)
             }
+            .disabled(!isActionEnabled)
             .buttonStyle(.plain)
         }
         .padding(.leading, isExpanded ? Constants.textLeadingPadding : 0)
@@ -77,7 +110,7 @@ struct ExpandableInputCapsuleView: View {
             return 0
         }
 
-        return 1
+        return isActionEnabled ? 1 : 0.45
     }
 }
 
@@ -108,6 +141,7 @@ private struct ExpandableInputCapsulePreview: View {
                 height: 44,
                 iconSize: 16,
                 hidesActionWhenExpandedAndEmpty: true,
+                onSubmit: nil,
                 onAction: {
                     isSearchExpanded.toggle()
                 }
@@ -127,6 +161,7 @@ private struct ExpandableInputCapsulePreview: View {
                 height: 40,
                 iconSize: 16,
                 hidesActionWhenExpandedAndEmpty: false,
+                onSubmit: nil,
                 onAction: {}
             )
             .frame(width: 280, alignment: .trailing)

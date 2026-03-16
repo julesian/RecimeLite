@@ -19,6 +19,8 @@ struct TagListView: View {
     @Binding var tags: [String]
     @Binding var isInputExpanded: Bool
     @Binding var inputText: String
+    let isActionEnabled: Bool
+    let onSubmitTag: () -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: contentSpacing) {
@@ -77,7 +79,9 @@ struct TagListView: View {
                 height: Constants.inputHeight,
                 iconSize: Constants.inputIconSize,
                 hidesActionWhenExpandedAndEmpty: false,
-                onAction: addTag
+                isActionEnabled: !isInputExpanded || isActionEnabled,
+                onSubmit: handleTagSubmission,
+                onAction: handleTagSubmission
             )
             .frame(
                 maxWidth: isInputExpanded ? .infinity : Constants.collapsedInputWidth,
@@ -114,16 +118,13 @@ struct TagListView: View {
         .buttonStyle(.plain)
     }
 
-    private func addTag() {
-        let trimmedText = inputText.trimmingCharacters(in: .whitespacesAndNewlines)
-
-        if isInputExpanded, !trimmedText.isEmpty {
-            withAnimation(.easeInOut(duration: 0.2)) {
-                tags.append(trimmedText)
-            }
-            inputText = ""
+    private func handleTagSubmission() {
+        if isInputExpanded {
+            onSubmitTag()
         } else {
-            isInputExpanded = true
+            withAnimation(.easeInOut(duration: 0.2)) {
+                isInputExpanded = true
+            }
         }
     }
 
@@ -231,7 +232,9 @@ private struct PreviewContainer: View {
                 placeholder: "Include ingredient",
                 tags: $includeIngredients,
                 isInputExpanded: $isIncludeExpanded,
-                inputText: $includeInputText
+                inputText: $includeInputText,
+                isActionEnabled: true,
+                onSubmitTag: {}
             )
 
             TagListView(
@@ -239,7 +242,9 @@ private struct PreviewContainer: View {
                 placeholder: "Exclude ingredient",
                 tags: $excludeIngredients,
                 isInputExpanded: $isExcludeExpanded,
-                inputText: $excludeInputText
+                inputText: $excludeInputText,
+                isActionEnabled: true,
+                onSubmitTag: {}
             )
         }
         .padding()
