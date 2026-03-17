@@ -45,6 +45,9 @@ struct RecipesFilterSheetView: View {
         .background(Color.backgroundPrimary)
         .contentShape(Rectangle())
         .onTapGesture {
+            withAnimation(.easeInOut(duration: 0.2)) {
+                viewModel.collapseTagInputs()
+            }
             dismissKeyboard()
         }
     }
@@ -177,6 +180,9 @@ struct RecipesFilterSheetView: View {
                 iconSize: Constants.controlIconSize,
                 hidesActionWhenExpandedAndEmpty: false,
                 managesFocus: false,
+                onSubmit: {
+                    dismissKeyboard()
+                },
                 onAction: {
                     viewModel.clearInstructionQuery()
                 }

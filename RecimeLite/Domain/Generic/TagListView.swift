@@ -51,10 +51,6 @@ struct TagListView: View {
                 style: .continuous
             )
         )
-        .onTapGesture {
-            guard isInputExpanded else { return }
-            collapseInput()
-        }
     }
 
     private var contentSpacing: CGFloat {
@@ -126,13 +122,6 @@ struct TagListView: View {
                 isInputExpanded = true
             }
         }
-    }
-
-    private func collapseInput() {
-        withAnimation(.easeInOut(duration: 0.2)) {
-            isInputExpanded = false
-        }
-        inputText = ""
     }
 }
 

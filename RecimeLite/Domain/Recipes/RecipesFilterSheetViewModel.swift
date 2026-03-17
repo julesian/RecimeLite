@@ -34,14 +34,18 @@ final class RecipesSheetFilterViewModel: ObservableObject {
     func resetFilters() {
         filters = RecipesFilter()
         instructionQueryInputText = ""
-        includeIngredientsInputText = ""
-        excludeIngredientsInputText = ""
-        isIncludeIngredientsInputExpanded = false
-        isExcludeIngredientsInputExpanded = false
+        collapseTagInputs()
     }
 
     func clearInstructionQuery() {
         instructionQueryInputText = ""
+    }
+
+    func collapseTagInputs() {
+        includeIngredientsInputText = ""
+        excludeIngredientsInputText = ""
+        isIncludeIngredientsInputExpanded = false
+        isExcludeIngredientsInputExpanded = false
     }
 
     var appliedFilters: RecipesFilter {
