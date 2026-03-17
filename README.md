@@ -11,6 +11,7 @@ RecimeLite is a SwiftUI iOS sample app focused on browsing recipes, searching wi
   <img width="154" src="https://github.com/user-attachments/assets/28fb1e8b-c1a4-47ac-9ac3-9e174e757dd8" />
   <img width="154" src="https://github.com/user-attachments/assets/a59c9ecd-2fcd-42fa-8201-82d75e4d686f" />
   <img width="154" src="https://github.com/user-attachments/assets/f98b20ca-5716-45ef-9550-507f8cb9ba4a" />
+  <img width="154" src="https://github.com/user-attachments/assets/1bc6ad64-2272-45e9-ae1d-5b78eea5a4ac" />
 </p>
 
 
