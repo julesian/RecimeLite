@@ -6,11 +6,11 @@
 RecimeLite is a SwiftUI iOS sample app focused on browsing recipes, searching with filters, viewing recipe details.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/21706513-2d85-4e76-a4a4-3aa4de37789a" width="180"/>
-  <img src="https://github.com/user-attachments/assets/4fc34878-76c3-422e-b096-75ac67f372f8" width="180"/>
-  <img src="https://github.com/user-attachments/assets/b5a8ca82-018a-448f-b15d-a26ec7edc5f9" width="180"/>
-  <img src="https://github.com/user-attachments/assets/1222cfaa-4edf-468e-a874-8fee6a56a8f1" width="180"/>
-  <img src="https://github.com/user-attachments/assets/8367df29-e4f5-469d-acf7-3801eb4b303e" width="180"/>
+  <img width="154" src="https://github.com/user-attachments/assets/8636cc70-56a7-40ed-b932-881f31b7b541" />
+  <img width="154" src="https://github.com/user-attachments/assets/e9eb9322-38a6-43c7-8598-1e57751dd8de" />
+  <img width="154" src="https://github.com/user-attachments/assets/28fb1e8b-c1a4-47ac-9ac3-9e174e757dd8" />
+  <img width="154" src="https://github.com/user-attachments/assets/a59c9ecd-2fcd-42fa-8201-82d75e4d686f" />
+  <img width="154" src="https://github.com/user-attachments/assets/f98b20ca-5716-45ef-9550-507f8cb9ba4a" />
 </p>
 
 
