@@ -7,14 +7,13 @@ struct RecipesFilterSheetView: View {
         static let sectionSpacing = 12.0
         static let cardPadding = 16.0
         static let cardCornerRadius = 24.0
-        static let servingsWidthRatio = 0.65
         static let controlHeight = 38.0
         static let controlIconSize = 15.0
         static let closeButtonSize = controlHeight
         static let bottomButtonHeight = controlHeight
         static let controlSpacing = 16.0
         static let dividerHeight = 1.0
-        static let headerLabelHeight = 22.0
+        static let servingsMaxValue = 99
     }
 
     @StateObject private var viewModel: RecipesSheetFilterViewModel
@@ -61,7 +60,7 @@ struct RecipesFilterSheetView: View {
 
     private var contentStack: some View {
         VStack(alignment: .leading, spacing: Constants.verticalSpacing) {
-            topControlsView
+            groupedControlsSection
             includeIngredientsSection
             excludeIngredientsSection
             instructionSection
@@ -88,33 +87,32 @@ struct RecipesFilterSheetView: View {
         .background(Color.foregroundPrimary)
     }
 
-    private var topControlsView: some View {
-        GeometryReader { geometry in
-            HStack(alignment: .top, spacing: Constants.controlSpacing) {
-                servingsSection
-                    .frame(width: servingsCardWidth(in: geometry.size.width))
-
-                vegetarianSection
-                    .frame(maxWidth: .infinity)
-            }
-        }
-        .frame(maxWidth: .infinity)
-        .frame(height: topControlsHeight)
-    }
-
-    private var servingsSection: some View {
-        VStack(spacing: Constants.sectionSpacing) {
-            Text("Servings")
-                .primaryTextStyle()
-
-            IncrementControlView(
-                value: $viewModel.filters.servings,
-                minimumValue: 0,
-                showsAnyForZeroValue: true
+    private var groupedControlsSection: some View {
+        VStack(spacing: 8) {
+            groupedControlRow(
+                title: "Servings",
+                control: {
+                    IncrementControlView(
+                        value: $viewModel.filters.servings,
+                        minimumValue: 0,
+                        maximumValue: Constants.servingsMaxValue,
+                        zeroValuePlaceholder: "Any"
+                    )
+                }
             )
+            .padding(.horizontal, Constants.cardPadding)
+
+            bottomDivider
+
+            groupedControlRow(
+                title: "Vegetarian",
+                control: {
+                    SwitchControlView(isOn: $viewModel.filters.vegetarianOnly)
+                }
+            )
+            .padding(.horizontal, Constants.cardPadding)
         }
-        .padding(Constants.cardPadding)
-        .frame(maxWidth: .infinity)
+        .padding(.vertical, Constants.cardPadding)
         .background(Color.foregroundPrimary)
         .clipShape(
             RoundedRectangle(
@@ -124,34 +122,19 @@ struct RecipesFilterSheetView: View {
         )
     }
 
-    private var topControlsHeight: CGFloat {
-        Constants.cardPadding * 2
-            + Constants.sectionSpacing
-            + Constants.controlHeight
-            + Constants.headerLabelHeight
-    }
-
-    private func servingsCardWidth(in totalWidth: CGFloat) -> CGFloat {
-        let availableWidth = totalWidth - Constants.controlSpacing
-        return availableWidth * Constants.servingsWidthRatio
-    }
-
-    private var vegetarianSection: some View {
-        VStack(spacing: Constants.sectionSpacing) {
-            Text("Vegetarian")
+    private func groupedControlRow<Control: View>(
+        title: String,
+        @ViewBuilder control: () -> Control
+    ) -> some View {
+        HStack(spacing: Constants.controlSpacing) {
+            Text(title)
                 .primaryTextStyle()
 
-            SwitchControlView(isOn: $viewModel.filters.vegetarianOnly)
+            Spacer()
+
+            control()
         }
-        .padding(Constants.cardPadding)
-        .frame(maxWidth: .infinity)
-        .background(Color.foregroundPrimary)
-        .clipShape(
-            RoundedRectangle(
-                cornerRadius: Constants.cardCornerRadius,
-                style: .continuous
-            )
-        )
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private var includeIngredientsSection: some View {

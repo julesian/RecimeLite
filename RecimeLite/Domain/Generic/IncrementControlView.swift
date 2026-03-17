@@ -14,6 +14,7 @@ struct IncrementControlView: View {
     }
 
     enum Constants {
+        static let controlWidth = 124.0
         static let controlHeight = 38.0
         static let buttonSize = 30.0
         static let iconSize = 15.0
@@ -26,18 +27,18 @@ struct IncrementControlView: View {
 
     let minimumValue: Int?
     let maximumValue: Int?
-    let showsAnyForZeroValue: Bool
+    let zeroValuePlaceholder: String?
 
     init(
         value: Binding<Int>,
         minimumValue: Int? = nil,
         maximumValue: Int? = nil,
-        showsAnyForZeroValue: Bool = false
+        zeroValuePlaceholder: String? = nil
     ) {
         _value = value
         self.minimumValue = minimumValue
         self.maximumValue = maximumValue
-        self.showsAnyForZeroValue = showsAnyForZeroValue
+        self.zeroValuePlaceholder = zeroValuePlaceholder
     }
 
     var body: some View {
@@ -51,7 +52,7 @@ struct IncrementControlView: View {
             actionButton(.increment)
         }
         .padding(.horizontal, Constants.horizontalPadding)
-        .frame(height: Constants.controlHeight)
+        .frame(width: Constants.controlWidth, height: Constants.controlHeight)
         .background(Color.foregroundPrimary)
         .overlay {
             Capsule()
@@ -75,8 +76,8 @@ struct IncrementControlView: View {
     }
 
     private var displayValue: String {
-        if showsAnyForZeroValue, value == 0 {
-            return "Any"
+        if value == 0, let zeroValuePlaceholder {
+            return zeroValuePlaceholder
         }
 
         return "\(value)"
